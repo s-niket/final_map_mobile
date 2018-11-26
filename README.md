@@ -1,5 +1,10 @@
 # 808XFinal
 
+[![Build Status](https://travis-ci.com/zzimits/808XFinal.svg?branch=master)](https://travis-ci.com/zzimits/808XFinal)
+[![Coverage Status](https://coveralls.io/repos/github/zzimits/808XFinal/badge.svg?branch=master)](https://coveralls.io/github/zzimits/808XFinal?branch=master)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+
+
 ## Operation/run/test/demo steps
 
 ## Dependencies
