@@ -17,3 +17,4 @@ This project will serve as the Final For ENPM808X software development for Robot
 Product Backlog Link
 https://docs.google.com/spreadsheets/d/14xQGIgG6C0ESPju1HD3xA1dDB8FOpix7ZD7LX9gpMUo/edit?usp=sharing
 Sprint Planning Link
+For sprint planning see the individual week sheets in the above link
