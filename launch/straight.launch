@@ -1,4 +1,5 @@
 <launch>
+
   <arg name="world_file"  default="$(find final_map_mobile)/World/StraightRoad.world"/>
 
   <arg name="base"      value="$(optenv TURTLEBOT_BASE kobuki)"/> <!-- create, roomba -->
@@ -23,6 +24,11 @@
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
     <param name="publish_frequency" type="double" value="30.0" />
   </node>
+  
+
+  <node pkg="final_map_mobile" name="mapMobile" type="mapMobile" output="screen" />
+
+ <!-- <node name="rviz" pkg="rviz" type="rviz" output="screen"/> -->
   
   <!-- Fake laser -->
   <node pkg="nodelet" type="nodelet" name="laserscan_nodelet_manager" args="manager"/>
