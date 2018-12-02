@@ -18,7 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
   cv_bridge
 )
 
-find_package(OpenCV REQUIRED COMPONENTS core imgproc highgui ximgproc objdetect)
+find_package(OpenCV REQUIRED COMPONENTS core imgproc highgui objdetect)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -136,7 +136,6 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-
 add_executable(mapMobile src/main.cpp src/Navigation.cpp src/LaneDetect.cpp)
 
 ## Rename C++ executable without prefix

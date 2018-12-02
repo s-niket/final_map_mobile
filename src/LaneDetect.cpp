@@ -1,8 +1,10 @@
 #include <ros/ros.h>
+#include <ros/console.h>
 #include "LaneDetect.hpp"
 #include <sstream>
 #include "std_msgs/String.h"
 
+using namespace cv;
 
 
 LaneDetect::LaneDetect() {
@@ -25,25 +27,35 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
           ROS_ERROR("Could not convert from '%s' to 'bgr8'.",
               msg->encoding.c_str());
       }
+	
 }
 
 void LaneDetect::detectLane() {
+
   const String window_capture_name = "Video Capture";
   const String window_detection_name = "Object Detection";
   cv::Mat frame_HSV, frame_Gray, frame_threshold_white, frame_threshold_yellow, src, frame_mask;
   
-  src = frame;
-
-  // Convert from BGR to HSV colorspace
-  cvtColor(src, frame_HSV, COLOR_BGR2HSV);
-  cvtColor(src, frame_Gray, COLOR_BGR2GRAY);
+  //imshow(window_capture_name, frame);
   
+  src = frame;
+  ROS_INFO_STREAM("We are here");
+ 
+	/*
+	// Convert from BGR to HSV colorspace
+  //cvtColor(src, frame_HSV, COLOR_BGR2HSV);
+  
+ //cvtColor(src, frame_Gray, COLOR_BGR2GRAY);
+
+
   // Detect the object based on HSV Range Values
-  inRange(frame_HSV, Scalar(20, 16, 0), Scalar(30, 255, 255), frame_threshold_yellow);
-  inRange(frame_Gray, 200, 255, frame_threshold_white);
-  // Combine the two thresholds
-  bitwise_or(frame_threshold_yellow,frame_threshold_white,frame_mask);
-  //Gaussian Blur
+  inRange(frame, Scalar(20, 16, 0), Scalar(30, 255, 255), frame_threshold_yellow);
+  //inRange(frame_Gray, 200, 255, frame_threshold_white);
+  //Combine the two thresholds
+ 
+	frame_mask = frame_threshold_yellow;
+  //bitwise_or(frame_threshold_yellow,frame_threshold_white,frame_mask);
+	//Gaussian Blur
   Mat gauss_gray;
   cv::Size kernel_size;
   kernel_size.height = 5;
@@ -54,7 +66,7 @@ void LaneDetect::detectLane() {
   Canny(gauss_gray,edges,0,50,3);
   //edges(Range(0,259),Range(0,363)).setTo(0);
   std::vector<Vec2f> lines;
-  /*
+  
 	// Line Detection
   HoughLines(edges, lines, 1, CV_PI/180, 60, 0, 0 );
   float rho_right = 0;
@@ -115,12 +127,11 @@ void LaneDetect::detectLane() {
   pt8.x = src.cols/2;
   pt7.y = 800;
   line( src, pt7, pt8, Scalar(255,0,0), 3, CV_AA);
-	*/
-/*
+
   // Show the frames
-  imshow(window_capture_name, frame_mask);
-  imshow(window_detection_name, src);
-  waitKey();
-  */
+  //imshow(window_capture_name, frame_mask);
+  //imshow(window_detection_name, src);
+  //waitKey();
+*/
 	
 }
