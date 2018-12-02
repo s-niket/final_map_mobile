@@ -20,18 +20,26 @@ class SignDetect {
  private:
   ros::NodeHandle nh;
   ros::Publisher signPub;
-  
+  ros::Subscriber imageLoop;
+  cv_bridge::CvImagePtr cv_ptr;
+  int flag;
+
+
  public:
   cv::Mat frame;
-  
+
   SignDetect();
-  
+
   ~SignDetect();
-  
+
+  void StartIP();
+
+  void showFrame();
+
   void imageCallback(const sensor_msgs::ImageConstPtr& msg);
-  
-  void detectSign(cv::Mat inputFrame);
-      
+
+  void detectSign();
+
 };
 
 

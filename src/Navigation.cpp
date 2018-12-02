@@ -25,13 +25,18 @@ Navigation::~Navigation() {
   msg.angular.x = 0.0;
   msg.angular.y = 0.0;
   msg.angular.z = 0.0;
-
   velocity.publish(msg);
 }
 
 
 void Navigation::move() {
-  while(ros::ok()) {
-    velocity.publish(msg);
-  }
+  msg.linear.x = 0.5;
+  msg.linear.y = 0.0;
+  msg.linear.z = 0.0;
+  msg.angular.x = 0.0;
+  msg.angular.y = 0.0;
+  msg.angular.z = 0.0;
+  velocity.publish(msg);
+
+
 }
