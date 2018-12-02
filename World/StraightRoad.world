@@ -52,9 +52,9 @@
       <static>1</static>
     </model>
     <road name='my_road'>
-      <width>7.34</width>
-      <point>0 0 0</point>
-      <point>100 0 0</point>
+      <width>1.5</width>
+      <point>0 0.375 0</point>
+      <point>100 0.375 0</point>
     </road>
     <gravity>0 0 -9.8</gravity>
     <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
@@ -127,27 +127,17 @@
       <pose frame=''>13.3214 -3.92169 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>466 398000000</sim_time>
-      <real_time>28 944796488</real_time>
-      <wall_time>1543703243 838190815</wall_time>
-      <iterations>28145</iterations>
-      <model name='Speed limit_0'>
-        <pose frame=''>39.396 -3.8496 0 0 -0 1.34877</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>39.396 -3.8496 0 0 -0 1.34877</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
+      <sim_time>554 938000000</sim_time>
+      <real_time>31 468855296</real_time>
+      <wall_time>1543767794 880542427</wall_time>
+      <iterations>31232</iterations>
       <model name='Stop Sign'>
-        <pose frame=''>13.3214 -3.92169 0 1.2e-05 1e-06 -1.83892</pose>
+        <pose frame=''>14.1518 -0.632887 1e-06 2.6e-05 2.1e-05 -1.61158</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>13.3214 -3.92169 0 1.2e-05 1e-06 -1.83892</pose>
+          <pose frame=''>14.1518 -0.632887 1e-06 2.6e-05 2.1e-05 -1.61158</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 -0.010602 -0.264103 0.184497 0</acceleration>
+          <acceleration>0 0 -0.010602 -0.298891 0.120224 -0</acceleration>
           <wrench>0 0 -0.010602 0 -0 0</wrench>
         </link>
       </model>
@@ -167,48 +157,10 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>-15.828 -0.6709 9.19919 0 0.367642 -0.019806</pose>
+        <pose frame=''>-18.3473 -0.443162 8.67934 0 0.487642 -0.403808</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
-    <model name='Speed limit_0'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>model://speed_limit_sign/meshes/speed_limit_sign.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>model://speed_limit_sign/meshes/speed_limit_sign.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <pose frame=''>39.396 -3.8496 0 0 -0 0</pose>
-    </model>
   </world>
 </sdf>
