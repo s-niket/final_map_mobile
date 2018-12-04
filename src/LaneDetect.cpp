@@ -1,14 +1,14 @@
 #include <ros/ros.h>
 #include <ros/console.h>
 #include "LaneDetect.hpp"
+#include <std_msgs/Float32.h>
 #include <sstream>
-#include "std_msgs/String.h"
 
 using namespace cv;
 
 
 LaneDetect::LaneDetect() {
-  lanePub = nh.advertise < std_msgs::String >("lane",1000); 
+  lanePub = nh.advertise < std_msgs::Float32 >("lane",1000); 
 }
 
 LaneDetect::~LaneDetect() {
@@ -117,6 +117,10 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
 
   imshow("lines", src);
   waitKey(0);
+  std_msgs::Float32 laneData;
+  float m = pt5.x - pt6.y;
+  laneData.data = m;
+  lanePub.publish(laneData);
 }
 
 void LaneDetect::detectLane() {
