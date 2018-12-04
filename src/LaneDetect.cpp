@@ -27,34 +27,21 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
           ROS_ERROR("Could not convert from '%s' to 'bgr8'.",
               msg->encoding.c_str());
       }
+
+  cvtColor(frame, frame_HSV, COLOR_BGR2HSV);
+  ROS_INFO_STREAM("DID we get here");
+  cvtColor(frame, frame_Gray, COLOR_BGR2GRAY);
 	
-}
-
-void LaneDetect::detectLane() {
-
-  const String window_capture_name = "Video Capture";
-  const String window_detection_name = "Object Detection";
-  cv::Mat frame_HSV, frame_Gray, frame_threshold_white, frame_threshold_yellow, src, frame_mask;
+  cv::Mat frame_threshold_white, frame_threshold_yellow, src, frame_mask;
   
-  //imshow(window_capture_name, frame);
   
   src = frame;
-  ROS_INFO_STREAM("We are here");
- 
-	/*
-	// Convert from BGR to HSV colorspace
-  //cvtColor(src, frame_HSV, COLOR_BGR2HSV);
   
- //cvtColor(src, frame_Gray, COLOR_BGR2GRAY);
-
-
   // Detect the object based on HSV Range Values
-  inRange(frame, Scalar(20, 16, 0), Scalar(30, 255, 255), frame_threshold_yellow);
-  //inRange(frame_Gray, 200, 255, frame_threshold_white);
+  inRange(frame_HSV, Scalar(20, 16, 0), Scalar(30, 255, 255), frame_threshold_yellow);
+  inRange(frame_Gray, 200, 255, frame_threshold_white);
   //Combine the two thresholds
- 
-	frame_mask = frame_threshold_yellow;
-  //bitwise_or(frame_threshold_yellow,frame_threshold_white,frame_mask);
+  bitwise_or(frame_threshold_yellow,frame_threshold_white,frame_mask);
 	//Gaussian Blur
   Mat gauss_gray;
   cv::Size kernel_size;
@@ -128,10 +115,12 @@ void LaneDetect::detectLane() {
   pt7.y = 800;
   line( src, pt7, pt8, Scalar(255,0,0), 3, CV_AA);
 
-  // Show the frames
-  //imshow(window_capture_name, frame_mask);
-  //imshow(window_detection_name, src);
-  //waitKey();
-*/
+  imshow("lines", src);
+  waitKey(0);
+}
+
+void LaneDetect::detectLane() {
+
+  
 	
 }

@@ -9,13 +9,13 @@ int main(int argc, char* argv[]) {
 	ros::Subscriber imageSub;
   Navigation mapMobile;
   LaneDetect follower;
-  ros::Rate rate(10);
+  ros::Rate rate(50);
   imageSub = n.subscribe<sensor_msgs::Image>
     ("/camera/rgb/image_raw", 10, &LaneDetect::imageCallback, &follower);
   while(ros::ok()) {
     ros::spinOnce();
-	follower.detectLane();
-    mapMobile.move();
+	//follower.detectLane();
+    //mapMobile.move();
 	rate.sleep();
   }
 

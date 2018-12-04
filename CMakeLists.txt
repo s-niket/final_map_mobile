@@ -18,7 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
   cv_bridge
 )
 
-find_package(OpenCV REQUIRED COMPONENTS core imgproc highgui objdetect)
+find_package(OpenCV REQUIRED COMPONENTS core imgproc highgui ximgproc objdetect)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 

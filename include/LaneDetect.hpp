@@ -22,6 +22,8 @@ class LaneDetect {
   
  public:
   cv::Mat frame;
+  cv::Mat frame_HSV;
+  cv::Mat frame_Gray;
   
   LaneDetect();
   
