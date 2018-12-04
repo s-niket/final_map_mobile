@@ -4,7 +4,6 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include "std_msgs/String.h"
-#include <std_msgs/Float32.h>
 
 class Navigation {
  private: 
@@ -19,7 +18,7 @@ class Navigation {
   
   void signCallback();
 
-  void laneCallback(const std_msgs::Float32& lane);
+  void laneCallback(const std_msgs::String& lane);
 
   void move();
 

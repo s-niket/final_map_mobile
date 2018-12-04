@@ -1,7 +1,7 @@
 #include <iostream>
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
-#include <std_msgs/Float32.h>
+#include <std_msgs/String.h>
 #include "Navigation.hpp"
 
 Navigation::Navigation() {
@@ -35,12 +35,12 @@ void Navigation::signCallback(){
 	
 }
 
-void Navigation::laneCallback(const std_msgs::Float32& lane) {
+void Navigation::laneCallback(const std_msgs::String& lane) {
   float m = .5;
   if( m > 0) {
-    msg.angular.z = 0.25;
+    msg.angular.z = 1;
   } else if( m < 0) {
-    msg.angular.z = -0.25;
+    msg.angular.z = -1;
   } else
     msg.angular.z = 0;
   velocity.publish(msg);
