@@ -1,0 +1,5 @@
+<launch>
+  
+  <node pkg="final_map_mobile" name="mapMobile" type="mapMobile" output="screen" />
+
+</launch>
