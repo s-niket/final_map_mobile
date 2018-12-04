@@ -18,6 +18,7 @@ using namespace cv;
 class LaneDetect {
  private:
   ros::NodeHandle nh;
+<<<<<<< HEAD:include/LaneDetect.hpp
   ros::Publisher lanePub;
   
  public:
@@ -36,3 +37,30 @@ class LaneDetect {
 };
 
 #endif 
+=======
+  ros::Publisher signPub;
+  ros::Subscriber imageLoop;
+  cv_bridge::CvImagePtr cv_ptr;
+  int flag;
+
+
+ public:
+  cv::Mat frame;
+
+  SignDetect();
+
+  ~SignDetect();
+
+  void StartIP();
+
+  void showFrame();
+
+  void imageCallback(const sensor_msgs::ImageConstPtr& msg);
+
+  void detectSign();
+
+};
+
+
+#endif  // INCLUDE_OBSTACLEDETECTOR_HPP_
+>>>>>>> SignDetector:include/SignDetect.hpp

@@ -26,6 +26,7 @@ Navigation::~Navigation() {
   msg.angular.x = 0.0;
   msg.angular.y = 0.0;
   msg.angular.z = 0.0;
+<<<<<<< HEAD
 
   //velocity.publish(msg);
 }
@@ -33,6 +34,9 @@ Navigation::~Navigation() {
 void Navigation::signCallback(){
 
 	
+=======
+  velocity.publish(msg);
+>>>>>>> SignDetector
 }
 
 void Navigation::laneCallback(const std_msgs::String& lane) {
@@ -47,7 +51,13 @@ void Navigation::laneCallback(const std_msgs::String& lane) {
 }
 
 void Navigation::move() {
-  while(ros::ok()) {
-    velocity.publish(msg);
-  }
+  msg.linear.x = 0.5;
+  msg.linear.y = 0.0;
+  msg.linear.z = 0.0;
+  msg.angular.x = 0.0;
+  msg.angular.y = 0.0;
+  msg.angular.z = 0.0;
+  velocity.publish(msg);
+
+
 }
