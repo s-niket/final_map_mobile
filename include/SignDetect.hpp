@@ -1,6 +1,6 @@
 
-#ifndef INCLUDE_LANEDETECT_HPP_
-#define INCLUDE_LANEDETECT_HPP_
+#ifndef INCLUDE_SIGNDETECT_HPP_
+#define INCLUDE_SIGNDETECT_HPP_
 
 
 #include <iostream>
@@ -11,28 +11,36 @@
 #include <vector>
 #include <string>
 #include "opencv2/opencv.hpp"
+#include "opencv2/objdetect.hpp"
 #include "sensor_msgs/Image.h"
 
 using namespace cv;
 
-class LaneDetect {
+class SignDetect {
  private:
   ros::NodeHandle nh;
-  ros::Publisher lanePub;
-  
+  ros::Publisher signPub;
+  ros::Subscriber imageLoop;
+  cv_bridge::CvImagePtr cv_ptr;
+  int flag;
+
+
  public:
   cv::Mat frame;
-  cv::Mat frame_HSV;
-  cv::Mat frame_Gray;
-  
-  LaneDetect();
-  
-  ~LaneDetect();
-  
+
+  SignDetect();
+
+  ~SignDetect();
+
+  void StartIP();
+
+  void showFrame();
+
   void imageCallback(const sensor_msgs::ImageConstPtr& msg);
-  
-  void detectLane();
-      
+
+  void detectSign();
+
 };
 
-#endif 
+
+#endif  // INCLUDE_OBSTACLEDETECTOR_HPP_

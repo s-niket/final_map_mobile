@@ -25,15 +25,10 @@ catkin_package()
 include_directories(include ${catkin_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-<<<<<<< HEAD
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(mapMobile src/main.cpp src/Navigation.cpp src/LaneDetect.cpp)
-=======
->>>>>>> SignDetector
-
-add_executable(mapMobile src/vision_node.cpp src/Navigation.cpp src/SignDetect.cpp)
+add_executable(mapMobile src/main.cpp src/Navigation.cpp src/LaneDetect.cpp src/SignDetect.cpp)
 
 target_link_libraries(mapMobile ${catkin_LIBRARIES} ${OpenCV_LIBS})
 

@@ -26,17 +26,10 @@ Navigation::~Navigation() {
   msg.angular.x = 0.0;
   msg.angular.y = 0.0;
   msg.angular.z = 0.0;
-<<<<<<< HEAD
-
-  //velocity.publish(msg);
 }
 
 void Navigation::signCallback(){
 
-	
-=======
-  velocity.publish(msg);
->>>>>>> SignDetector
 }
 
 void Navigation::laneCallback(const std_msgs::String& lane) {
