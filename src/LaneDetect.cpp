@@ -126,12 +126,14 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   imshow("lines", src);
   //waitKey(0);
   std_msgs::Float32 laneData;
-	ROS_INFO_STREAM("Orient: "<<orient);
-  if (src.cols/2 < orient)
+	
+  if (src.cols/2 < orient) {
     laneData.data = -1;
-  else if (src.cols/2 > orient)
+	ROS_INFO_STREAM("Orient: "<<-orient/src.cols);
+  } else if (src.cols/2 > orient) {
     laneData.data = 1;
-  else
+	ROS_INFO_STREAM("Orient: "<<orient/src.cols);
+  } else
     laneData.data = 0;
   lanePub.publish(laneData);
 }

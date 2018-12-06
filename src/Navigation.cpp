@@ -36,9 +36,9 @@ void Navigation::laneCallback(const std_msgs::Float32::ConstPtr& lane) {
 
   float m = lane->data;
   if( m > 0) {
-    msg.angular.z = .25;
+    msg.angular.z = m/2;
   } else if( m < 0) {
-    msg.angular.z = -.25;
+    msg.angular.z = m/2;
   } else
     msg.angular.z = 0;
   velocity.publish(msg);
