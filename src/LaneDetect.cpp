@@ -1,14 +1,14 @@
 #include <ros/ros.h>
 #include <ros/console.h>
 #include "LaneDetect.hpp"
-#include <std_msgs/String.h>
+#include <std_msgs/Float32.h>
 #include <sstream>
 
 using namespace cv;
 
 
 LaneDetect::LaneDetect() {
-  lanePub = nh.advertise < std_msgs::String >("lane",1000); 
+  lanePub = nh.advertise < std_msgs::Float32 >("lane",1000); 
 }
 
 LaneDetect::~LaneDetect() {
@@ -107,6 +107,14 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   pt5.x = (((pt5.y-br)/mr)+((pt5.y-bl)/ml))/2;
   pt6.y = 800;
   pt6.x = (((pt6.y-br)/mr)+((pt6.y-bl)/ml))/2;
+  double orient = 0;
+  if (pt5.x != pt6.x) {
+    double mc = (pt5.y - pt6.y)/(pt5.x - pt6.x);
+    double bc = pt5.y-(mc*pt5.x);
+    orient = (src.rows-bc)/mc;
+  } else {
+    orient = 0;
+  }
   line( src, pt5, pt6, Scalar(0,255,0), 3, CV_AA);
   // Current Heading
   pt7.x = src.cols/2;
@@ -116,12 +124,15 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   line( src, pt7, pt8, Scalar(255,0,0), 3, CV_AA);
 
   imshow("lines", src);
-  waitKey(0);
-  std_msgs::String laneData;
-  float m = pt5.x - pt6.y;
-  std::stringstream ss;
-  ss<<m;
-  laneData.data = ss.str();
+  //waitKey(0);
+  std_msgs::Float32 laneData;
+	ROS_INFO_STREAM("Orient: "<<orient);
+  if (src.cols/2 < orient)
+    laneData.data = -1;
+  else if (src.cols/2 > orient)
+    laneData.data = 1;
+  else
+    laneData.data = 0;
   lanePub.publish(laneData);
 }
 

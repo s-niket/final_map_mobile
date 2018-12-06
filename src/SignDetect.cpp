@@ -104,7 +104,7 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   }
 
   imshow("Output", frame);
-  waitKey(0);
+  //waitKey(0);
 }
 
 

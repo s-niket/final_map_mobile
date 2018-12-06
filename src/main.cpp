@@ -20,9 +20,9 @@ int main(int argc, char* argv[]) {
     ("/camera/rgb/image_raw", 10, &LaneDetect::imageCallback, &follower);
   
   imageStream = nh.subscribe < sensor_msgs::Image
-      > ("/camera/rgb/image_raw", 10, &SignDetect::imageCallback, &detector);
+      > ("/camera/rgb/image_raw", 500, &SignDetect::imageCallback, &detector);
   
-  laneSub = n.subscribe("lane", 10, &Navigation::laneCallback, &mapMobile);
+  laneSub = n.subscribe("lane", 500, &Navigation::laneCallback, &mapMobile);
 	
   while(ros::ok()) {
     ros::spinOnce();
