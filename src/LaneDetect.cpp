@@ -1,19 +1,77 @@
+/**
+ * Copyright 2018, Niket Shah Zachary Zimits
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+ * CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+ * THE POSSIBILITY OF SUCH DAMAGE.
+ */
+/**
+ * @file LaneDetect.cpp
+ * @author Niket Shah Zachary Zimits
+ * @copyright 2018 BSD 3-clause
+ * @brief Implementation of header LaneDetect.hpp for lane
+ *        detection for navigation of roads
+ */
+
 #include <ros/ros.h>
 #include <ros/console.h>
 #include "LaneDetect.hpp"
 #include <std_msgs/Float32.h>
 #include <sstream>
 
-using namespace cv;
 
+/*
+ * @brief Constructor for LaneDetect class
+ *        Defines the publisher for lane detect messages
+ * @param none
+ * @return void
+ */
 
 LaneDetect::LaneDetect() {
-  lanePub = nh.advertise < std_msgs::Float32 >("lane",1000); 
+  lanePub = nh.advertise < std_msgs::Float32 >("lane",1000);
 }
 
+/*
+ * @brief Destructor for class LaneDetect
+ *        Destroys all windows after class is destructed
+ * @param none
+ * @return void
+ */
+
 LaneDetect::~LaneDetect() {
-  destroyAllWindows();
+  cv::destroyAllWindows();
 }
+
+/*
+ * @brief Callback function for image topic subscriber
+ *        Converts the ROS images into OpenCV images and detects lanes
+ * @param msg : ROS sensor image
+ * @return void
+ */
 
 void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   cv_bridge::CvImagePtr cv_ptr;
@@ -21,41 +79,41 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
       try {
           cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
           frame = cv_ptr->image;
-          waitKey(30);
+    cv::waitKey(30);
       }
       catch (cv_bridge::Exception& e) {
           ROS_ERROR("Could not convert from '%s' to 'bgr8'.",
               msg->encoding.c_str());
       }
 
-  cvtColor(frame, frame_HSV, COLOR_BGR2HSV);
-  ROS_INFO_STREAM("DID we get here");
-  cvtColor(frame, frame_Gray, COLOR_BGR2GRAY);
-	
+  cvtColor(frame, frame_HSV, cv::COLOR_BGR2HSV);
+  cvtColor(frame, frame_Gray, cv::COLOR_BGR2GRAY);
+
   cv::Mat frame_threshold_white, frame_threshold_yellow, src, frame_mask;
-  
-  
+
+
   src = frame;
-  
+
   // Detect the object based on HSV Range Values
-  inRange(frame_HSV, Scalar(20, 16, 0), Scalar(30, 255, 255), frame_threshold_yellow);
+  inRange(frame_HSV, cv::Scalar(20, 16, 0), cv::Scalar(30, 255, 255),
+          frame_threshold_yellow);
   inRange(frame_Gray, 200, 255, frame_threshold_white);
   //Combine the two thresholds
   bitwise_or(frame_threshold_yellow,frame_threshold_white,frame_mask);
 	//Gaussian Blur
-  Mat gauss_gray;
+  cv::Mat gauss_gray;
   cv::Size kernel_size;
   kernel_size.height = 5;
   kernel_size.width = 5;
   GaussianBlur(frame_mask,gauss_gray, kernel_size,0,0,1);
-  Mat edges;
+  cv::Mat edges;
   // Detect Edges
   Canny(gauss_gray,edges,0,50,3);
   //edges(Range(0,259),Range(0,363)).setTo(0);
-  std::vector<Vec2f> lines;
-  
+  std::vector < cv::Vec2f > lines;
+
 	// Line Detection
-  HoughLines(edges, lines, 1, CV_PI/180, 60, 0, 0 );
+  cv::HoughLines(edges, lines, 1, CV_PI / 180, 60, 0, 0);
   float rho_right = 0;
   float rho_left = 0;
   float theta_right = 0;
@@ -82,7 +140,7 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   rho_left = rho_left / num_left;
   theta_left = theta_left / num_left;
   // Line Graphing
-  Point pt1, pt2, pt3, pt4, pt5, pt6, pt7, pt8;
+  cv::Point pt1, pt2, pt3, pt4, pt5, pt6, pt7, pt8;
   double a = cos(theta_right), b = sin(theta_right);
   double x0 = a*rho_right, y0 = b*rho_right;
   pt1.x = cvRound(x0 + 1000*(-b));
@@ -91,8 +149,8 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   pt2.y = cvRound(y0 - 1000*(a));
   double mr = (1000*(a))/(1000*(-b));
   double br = (pt1.y-mr*pt1.x);
-  line( src, pt1, pt2, Scalar(0,0,255), 3, CV_AA);
-  
+  line(src, pt1, pt2, cv::Scalar(0, 0, 255), 3, CV_AA);
+
   a = cos(theta_left), b = sin(theta_left);
   x0 = a*rho_left, y0 = b*rho_left;
   pt3.x = cvRound(x0 + 1000*(-b));
@@ -101,7 +159,7 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   pt4.y = cvRound(y0 - 1000*(a));
   double ml = (1000*(a))/(1000*(-b));
   double bl = (pt3.y-ml*pt3.x);
-  line( src, pt3, pt4, Scalar(0,0,255), 3, CV_AA);
+  line(src, pt3, pt4, cv::Scalar(0, 0, 255), 3, CV_AA);
   // Lane Center
   pt5.y = -5;
   pt5.x = (((pt5.y-br)/mr)+((pt5.y-bl)/ml))/2;
@@ -115,18 +173,18 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   } else {
     orient = 0;
   }
-  line( src, pt5, pt6, Scalar(0,255,0), 3, CV_AA);
+  line(src, pt5, pt6, cv::Scalar(0, 255, 0), 3, CV_AA);
   // Current Heading
   pt7.x = src.cols/2;
   pt7.y = -5;
   pt8.x = src.cols/2;
   pt7.y = 800;
-  line( src, pt7, pt8, Scalar(255,0,0), 3, CV_AA);
+  line(src, pt7, pt8, cv::Scalar(255, 0, 0), 3, CV_AA);
 
   imshow("lines", src);
   //waitKey(0);
   std_msgs::Float32 laneData;
-	
+
   if (src.cols/2 < orient) {
     laneData.data = -1;
 	ROS_INFO_STREAM("Orient: "<<-orient/src.cols);
@@ -138,8 +196,3 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   lanePub.publish(laneData);
 }
 
-void LaneDetect::detectLane() {
-
-  
-	
-}
