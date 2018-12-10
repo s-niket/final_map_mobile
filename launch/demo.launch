@@ -1,5 +1,5 @@
 <launch>
-  <arg name="world_file"  default="$(find final_map_mobile)/World/FullTrack.world"/>
+  <arg name="world_file"  default="$(find final_map_mobile)/World/FullTrackWithSignsAndWalls.world"/>
 
   <arg name="base"      value="$(optenv TURTLEBOT_BASE kobuki)"/> <!-- create, roomba -->
   <arg name="battery"   value="$(optenv TURTLEBOT_BATTERY /proc/acpi/battery/BAT0)"/>  <!-- /proc/acpi/battery/BAT0 --> 
@@ -26,6 +26,8 @@
   
   
   <node pkg="final_map_mobile" name="mapMobile" type="mapMobile" output="screen" />
+
+  <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen" />
 
   <include file="$(find turtlebot_rviz_launchers)/launch/view_robot.launch">
   </include>
