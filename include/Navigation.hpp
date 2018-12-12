@@ -59,6 +59,7 @@ class Navigation {
   geometry_msgs::Twist msg;
   // Publisher for velocities
   ros::Publisher velocity;
+  int inverse_flag = 0;
 
  public:
   /*

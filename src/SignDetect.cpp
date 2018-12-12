@@ -91,11 +91,11 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
 
   // Stores the name of the classifiers stored in the directory /classifiers
   std::string stopSignClassifier =
-      "/home/niket/808X_Final_MapMobile/src/final_map_mobile/classifiers/Stopsign_HAAR_19Stages.xml";
+      "/home/zach/catkin_ws/src/final_map_mobile/classifiers/Stopsign_HAAR_19Stages.xml";
   std::string speedLimitClassifier =
-      "/home/niket/808X_Final_MapMobile/src/final_map_mobile/classifiers/Speedlimit_HAAR_ 17Stages.xml";
+      "/home/zach/catkin_ws/src/final_map_mobile/classifiers/Speedlimit_HAAR_ 17Stages.xml";
   std::string trafficLightClassifier =
-      "/home/niket/808X_Final_MapMobile/src/final_map_mobile/classifiers/TrafficLight_HAAR_16Stages.xml";
+      "/home/zach/catkin_ws/src/final_map_mobile/classifiers/TrafficLight_HAAR_16Stages.xml";
 
 
   cv::CascadeClassifier stopSign_cascade;
@@ -123,6 +123,9 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   cv::equalizeHist(frame_gray, frame_gray);
   std_msgs::Int8 signData;
 
+  // Initialize signData to no sign
+  signData.data = 0;
+	
   // Stop sign detection
 
   stopSign_cascade.detectMultiScale(frame_gray, stops, 1.1, 2,
@@ -142,7 +145,6 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
           ROS_WARN_STREAM("Stop Sign Detected!");
         }
       }
-      signPub.publish(signData);
   }
 
   // Speed limit sign detection
@@ -163,7 +165,6 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
         signData.data = 2;
       }
       ROS_WARN_STREAM("Speed Limit Sign Detected!");
-      signPub.publish(signData);
   }
 
   // Traffic light detection
@@ -181,11 +182,11 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
               cv::FONT_HERSHEY_PLAIN,
               5, (0, 0, 0), 2, 8, false);
       signData.data = 3;
-      signPub.publish(signData);
       ROS_WARN_STREAM("Traffic Light Detected");
 
   }
 
   imshow("Output", frame);
-  signData.data = 0;
+  signPub.publish(signData);
+  
 }

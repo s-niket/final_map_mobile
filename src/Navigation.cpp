@@ -56,7 +56,7 @@ Navigation::Navigation() {
   velocity = nh.advertise <geometry_msgs::Twist>
   ("/mobile_base/commands/velocity", 500);
 
-  msg.linear.x = 0.0;
+  msg.linear.x = 0;
   msg.linear.y = 0.0;
   msg.linear.z = 0.0;
   msg.angular.x = 0.0;
@@ -70,7 +70,7 @@ Navigation::Navigation() {
  * @brief Destructor for Navigation class
  *        Defines all velocities as zero as destruction of class
  * @param none
- * @return void
+ * @return 
  */
 
 Navigation::~Navigation() {
@@ -93,9 +93,11 @@ void Navigation::laneCallback(const std_msgs::Float32::ConstPtr& lane) {
 
   float m = lane->data;
   if( m > 0) {
-    msg.angular.z = m/2;
+    //.msg.angular.z = m/2;
+	//ROS_INFO_STREAM("TURN TO THE LEFT");
   } else if( m < 0) {
-    msg.angular.z = m/2;
+    //msg.angular.z = m/2;
+	//ROS_INFO_STREAM("TURNTTO THE RIGHT");
   } else
     msg.angular.z = 0;
   velocity.publish(msg);
@@ -109,26 +111,31 @@ void Navigation::laneCallback(const std_msgs::Float32::ConstPtr& lane) {
 
 void Navigation::signCallback(const std_msgs::Int8::ConstPtr& sign) {
   int flag = sign->data;
+  ROS_INFO_STREAM(inverse_flag);
   ros::Rate loop_rate(50);
-  if (flag == 1) {
+  if (flag == 1 && inverse_flag == 0) {
     ros::Time start = ros::Time::now();
     while (ros::Time::now() - start < ros::Duration(2.0)) {
-      msg.linear.z = 0.0;
+      //msg.linear.x = 0.0;
       ROS_WARN_STREAM("STOPPING....");
       velocity.publish(msg);
       loop_rate.sleep();
     }
-    msg.linear.z = 1.0;
-  }
+	//msg.linear.x = 1.0;
+	inverse_flag = 1;
+  } 
   if (flag == 2) {
     ros::Time start = ros::Time::now();
     while (ros::Time::now() - start < ros::Duration(5.0)) {
       ROS_WARN_STREAM("ALTERING SPEED");
-      msg.linear.z = 5.0;
+      //msg.linear.x = 5.0;
       velocity.publish(msg);
     }
   }
-  flag = 0;
+  if (flag == 0) {
+    inverse_flag = 0;
+	ROS_WARN_STREAM("No Sign");
+  }
 
 }
 

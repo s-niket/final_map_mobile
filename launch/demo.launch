@@ -26,9 +26,12 @@
   
   
   <node pkg="final_map_mobile" name="mapMobile" type="mapMobile" output="screen" />
-
-  <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen" />
-
+<!--
+	<node name="map_server" pkg="map_server" type="map_saver" args="-f $(find final_map_mobile)/map/my_map.yaml" />
+	
+	<node name="gmapping" pkg="gmapping" type="slam_gmapping" args="scan:=/scan" output="screen">
+	</node>
+-->
   <include file="$(find turtlebot_rviz_launchers)/launch/view_robot.launch">
   </include>
 

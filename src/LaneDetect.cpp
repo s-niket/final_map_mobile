@@ -187,10 +187,8 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
 
   if (src.cols/2 < orient) {
     laneData.data = -1;
-	ROS_INFO_STREAM("Orient: "<<-orient/src.cols);
   } else if (src.cols/2 > orient) {
     laneData.data = 1;
-	ROS_INFO_STREAM("Orient: "<<orient/src.cols);
   } else
     laneData.data = 0;
   lanePub.publish(laneData);

@@ -57,10 +57,10 @@ int main(int argc, char* argv[]) {
   ros::Rate rate(50);
 
   imageSub = n.subscribe<sensor_msgs::Image>
-    ("/camera/rgb/image_raw", 10, &LaneDetect::imageCallback, &follower);
+    ("/camera/rgb/image_raw", 500, &LaneDetect::imageCallback, &follower);
 
   imageStream = nh.subscribe < sensor_msgs::Image
-      > ("/camera/rgb/image_raw", 500, &SignDetect::imageCallback, &detector);
+      > ("/camera/rgb/image_raw", 10, &SignDetect::imageCallback, &detector);
 
   laneSub = n.subscribe("lane", 500, &Navigation::laneCallback, &mapMobile);
 
