@@ -95,17 +95,17 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   src = frame;
 
   // Detect the object based on HSV Range Values
-  inRange(frame_HSV, cv::Scalar(20, 16, 0), cv::Scalar(30, 255, 255),
+  inRange(frame_HSV, cv::Scalar(20, 49, 0), cv::Scalar(30, 255, 255),
           frame_threshold_yellow);
   inRange(frame_Gray, 200, 255, frame_threshold_white);
   //Combine the two thresholds
-  bitwise_or(frame_threshold_yellow,frame_threshold_white,frame_mask);
+  //bitwise_or(frame_threshold_yellow,frame_threshold_white,frame_mask);
 	//Gaussian Blur
   cv::Mat gauss_gray;
   cv::Size kernel_size;
   kernel_size.height = 5;
   kernel_size.width = 5;
-  GaussianBlur(frame_mask,gauss_gray, kernel_size,0,0,1);
+  GaussianBlur(frame_threshold_yellow,gauss_gray, kernel_size,0,0,1);
   cv::Mat edges;
   // Detect Edges
   Canny(gauss_gray,edges,0,50,3);
