@@ -56,7 +56,7 @@ Navigation::Navigation() {
   velocity = nh.advertise <geometry_msgs::Twist>
   ("/mobile_base/commands/velocity", 500);
 
-  msg.linear.x = 0;
+  msg.linear.x = 0.5;
   msg.linear.y = 0.0;
   msg.linear.z = 0.0;
   msg.angular.x = 0.0;
@@ -93,13 +93,14 @@ void Navigation::laneCallback(const std_msgs::Float32::ConstPtr& lane) {
 
   float m = lane->data;
   if( m > 0) {
-    //.msg.angular.z = m/2;
-	//ROS_INFO_STREAM("TURN TO THE LEFT");
+    msg.angular.z = m;
+	ROS_INFO_STREAM("Left: "<<msg.angular.z);
   } else if( m < 0) {
-    //msg.angular.z = m/2;
-	//ROS_INFO_STREAM("TURNTTO THE RIGHT");
+    msg.angular.z = m;
+	ROS_INFO_STREAM("Right: "<<msg.angular.z);
   } else
     msg.angular.z = 0;
+	ROS_INFO_STREAM("Angular: "<<msg.angular.z);
   velocity.publish(msg);
 }
 
@@ -113,26 +114,30 @@ void Navigation::signCallback(const std_msgs::Int8::ConstPtr& sign) {
   int flag = sign->data;
   ROS_INFO_STREAM(inverse_flag);
   ros::Rate loop_rate(50);
-  if (flag == 1 && inverse_flag == 0) {
-    ros::Time start = ros::Time::now();
-    while (ros::Time::now() - start < ros::Duration(2.0)) {
-      //msg.linear.x = 0.0;
-      ROS_WARN_STREAM("STOPPING....");
-      velocity.publish(msg);
-      loop_rate.sleep();
-    }
-	//msg.linear.x = 1.0;
-	inverse_flag = 1;
-  } 
-  if (flag == 2) {
-    ros::Time start = ros::Time::now();
-    while (ros::Time::now() - start < ros::Duration(5.0)) {
-      ROS_WARN_STREAM("ALTERING SPEED");
-      //msg.linear.x = 5.0;
-      velocity.publish(msg);
-    }
-  }
-  if (flag == 0) {
+  
+  if(flag != 0) {
+	  if (flag == 1 && inverse_flag == 0) {
+		ros::Time start = ros::Time::now();
+		while (ros::Time::now() - start < ros::Duration(2.0)) {
+		  msg.linear.x = 0.0;
+		  msg.angular.z = 0.0;
+		  velocity.publish(msg);
+		  ROS_WARN_STREAM("STOPPING....");
+		  velocity.publish(msg);
+		  loop_rate.sleep();
+		}
+		msg.linear.x = 0.5;
+		inverse_flag = 1;
+	  } 
+	  if (flag == 2) {
+		ros::Time start = ros::Time::now();
+		while (ros::Time::now() - start < ros::Duration(5.0)) {
+		  ROS_WARN_STREAM("ALTERING SPEED");
+		  //msg.linear.x = 5.0;
+		  velocity.publish(msg);
+		}
+	  }
+  } else {
     inverse_flag = 0;
 	ROS_WARN_STREAM("No Sign");
   }

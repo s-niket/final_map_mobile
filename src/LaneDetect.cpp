@@ -166,8 +166,9 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   pt6.y = 800;
   pt6.x = (((pt6.y-br)/mr)+((pt6.y-bl)/ml))/2;
   double orient = 0;
+  double mc = 0;
   if (pt5.x != pt6.x) {
-    double mc = (pt5.y - pt6.y)/(pt5.x - pt6.x);
+    mc = (pt5.y - pt6.y)/(pt5.x - pt6.x);
     double bc = pt5.y-(mc*pt5.x);
     orient = (src.rows-bc)/mc;
   } else {
@@ -183,14 +184,18 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
 
   imshow("lines", src);
   //waitKey(0);
+  
   std_msgs::Float32 laneData;
-
+  laneData.data = (-1*(((bl-br)/(mr-ml))-src.cols/2)/100);
+  ROS_INFO_STREAM("Slope: "<< mc/100);
+	/*
   if (src.cols/2 < orient) {
     laneData.data = -1;
   } else if (src.cols/2 > orient) {
     laneData.data = 1;
   } else
     laneData.data = 0;
+	*/
   lanePub.publish(laneData);
 }
 
