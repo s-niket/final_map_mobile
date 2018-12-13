@@ -91,11 +91,11 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
 
   // Stores the name of the classifiers stored in the directory /classifiers
   std::string stopSignClassifier =
-      "/home/zach/catkin_ws/src/final_map_mobile/classifiers/Stopsign_HAAR_19Stages.xml";
+      "/home/niket/808X_Final_MapMobile/src/final_map_mobile/classifiers/Stopsign_HAAR_19Stages.xml";
   std::string speedLimitClassifier =
-      "/home/zach/catkin_ws/src/final_map_mobile/classifiers/Speedlimit_HAAR_ 17Stages.xml";
+      "/home/niket/808X_Final_MapMobile/src/final_map_mobile/classifiers/Speedlimit_HAAR_ 17Stages.xml";
   std::string trafficLightClassifier =
-      "/home/zach/catkin_ws/src/final_map_mobile/classifiers/TrafficLight_HAAR_16Stages.xml";
+      "/home/niket/808X_Final_MapMobile/src/final_map_mobile/classifiers/TrafficLight_HAAR_16Stages.xml";
 
 
   cv::CascadeClassifier stopSign_cascade;
@@ -125,7 +125,7 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
 
   // Initialize signData to no sign
   signData.data = 0;
-	
+
   // Stop sign detection
 
   stopSign_cascade.detectMultiScale(frame_gray, stops, 1.1, 2,
@@ -188,5 +188,5 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
 
   imshow("Output", frame);
   signPub.publish(signData);
-  
+
 }

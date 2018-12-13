@@ -187,7 +187,7 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
 
   imshow("lines", src);
   //waitKey(0);
-  
+
   std_msgs::Float32 laneData;
   if((pt2.x < 10000 && pt2.x >-10000) && (pt3.x < -100000 || pt3.x > 100000))
 	laneData.data = 0.5;
@@ -198,11 +198,13 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   else
     laneData.data = (-1*(((src.rows-bc)/mc)-src.cols/2)/100);
   //laneData.data = (-1*(((bl-br)/(mr-ml))-src.cols/2)/100);
-  ROS_WARN_STREAM("Data: "<<laneData.data);
-  if (laneData.data >1.5)
-	  laneData.data = 1.5;
-  else if (laneData.data < -1.5)
-	  laneData.data = -1.5;
+  if (laneData.data > 1)
+    laneData.data = 1;
+  else if (laneData.data < -1)
+    laneData.data = -1;
   lanePub.publish(laneData);
+  ROS_WARN_STREAM("Data: " << laneData.data);
 }
+
+
 
