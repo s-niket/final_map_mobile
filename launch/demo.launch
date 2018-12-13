@@ -1,5 +1,5 @@
 <launch>
-  <arg name="world_file"  default="$(find final_map_mobile)/World/FullTrackWithSignsAndWalls.world"/>
+  <arg name="world_file"  default="$(find final_map_mobile)/World/Final.world"/>
 
   <arg name="base"      value="$(optenv TURTLEBOT_BASE kobuki)"/> <!-- create, roomba -->
   <arg name="battery"   value="$(optenv TURTLEBOT_BATTERY /proc/acpi/battery/BAT0)"/>  <!-- /proc/acpi/battery/BAT0 --> 
@@ -27,16 +27,32 @@
     <param name="publish_frequency" type="double" value="30.0" />
   </node>
   
-  
-  <node pkg="final_map_mobile" name="mapMobile" type="mapMobile" output="screen" />
-<!--
-	<node name="map_server" pkg="map_server" type="map_saver" args="-f $(find final_map_mobile)/map/my_map.yaml" />
-	
-	<node name="gmapping" pkg="gmapping" type="slam_gmapping" args="scan:=/scan" output="screen">
-	</node>
--->
   <include file="$(find turtlebot_rviz_launchers)/launch/view_robot.launch">
   </include>
+  
+ <node pkg="final_map_mobile" name="mapMobile" type="mapMobile" output="screen" /> 
+
+	<node name="map_server" pkg="map_server" type="map_saver" args="-f $(find final_map_mobile)/map/map" />
+	
+	<node name="gmapping" pkg="gmapping" type="slam_gmapping" output="screen">
+        	<param name="odom_frame" value="odom"/>
+        	<param name="base_frame" value="base_footprint"/>
+		<param name="xmin" value="-100.0"/>
+   	 	<param name="ymin" value="-100.0"/>
+    		<param name="xmax" value="100.0"/>
+    		<param name="ymax" value="100.0"/>
+ 		<param name="map_frame" value="map"/>
+	</node>
+
+	<node 
+		pkg="amcl"
+		type="amcl"
+		name="amcl">
+		<param name="max_particles" value="500"/>
+		<param name="update_min_d" value="-1"/>
+		<param name="update_min_a" value="-1"/>
+		<param name="use_map_topic" value="true"/>
+	</node>
 
   <!-- Fake laser -->
   <node pkg="nodelet" type="nodelet" name="laserscan_nodelet_manager" args="manager"/>

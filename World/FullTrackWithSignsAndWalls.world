@@ -54,14 +54,14 @@
     <road name='my_road'>
       <width>1.5</width>
       <point>10 0.375 0</point>
-      <point>50 0.375 0</point>
-      <point>52 1 0</point>
-      <point>53 2 0</point>
-      <point>53.5 3 0</point>
-      <point>53.5 5 0</point>
-      <point>53 6 0</point>
-      <point>52 7 0</point>
-      <point>50 7.625 0</point>
+      <point>30 0.375 0</point>
+      <point>32 1 0</point>
+      <point>33 2 0</point>
+      <point>33.5 3 0</point>
+      <point>33.5 5 0</point>
+      <point>33 6 0</point>
+      <point>32 7 0</point>
+      <point>30 7.625 0</point>
       <point>0 7.625 0</point>
       <point>-2 7 0</point>
       <point>-3 6 0</point>
