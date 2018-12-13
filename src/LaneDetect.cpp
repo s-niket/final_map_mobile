@@ -166,14 +166,17 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   pt6.y = 800;
   pt6.x = (((pt6.y-br)/mr)+((pt6.y-bl)/ml))/2;
   double orient = 0;
-  double mc = 0;
-  if (pt5.x != pt6.x) {
+  double mc = 1;
+  double bc = 0;
+  ROS_INFO_STREAM("pt5: "<<pt3.x<<" pt6: "<<pt2.x);
+  if (pt5.x != pt6.x && pt5.y != pt6.y) {
     mc = (pt5.y - pt6.y)/(pt5.x - pt6.x);
-    double bc = pt5.y-(mc*pt5.x);
+    bc = pt5.y-(mc*pt5.x);
     orient = (src.rows-bc)/mc;
   } else {
     orient = 0;
   }
+  ROS_INFO_STREAM("mc: "<<mc<<" bc: "<<bc);
   line(src, pt5, pt6, cv::Scalar(0, 255, 0), 3, CV_AA);
   // Current Heading
   pt7.x = src.cols/2;
@@ -186,16 +189,20 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   //waitKey(0);
   
   std_msgs::Float32 laneData;
-  laneData.data = (-1*(((bl-br)/(mr-ml))-src.cols/2)/100);
-  ROS_INFO_STREAM("Slope: "<< mc/100);
-	/*
-  if (src.cols/2 < orient) {
-    laneData.data = -1;
-  } else if (src.cols/2 > orient) {
-    laneData.data = 1;
-  } else
-    laneData.data = 0;
-	*/
+  if((pt2.x < 10000 && pt2.x >-10000) && (pt3.x < -100000 || pt3.x > 100000))
+	laneData.data = 0.5;
+  else if((pt3.x < 10000 && pt3.x > -10000) && (pt2.x > 10000 || pt2.x<-10000))
+    laneData.data = -0.5;
+  else if((pt3.x > 10000 || pt3.x<-10000) && (pt2.x > 10000 || pt2.x<-10000))
+	laneData.data = 0;
+  else
+    laneData.data = (-1*(((src.rows-bc)/mc)-src.cols/2)/100);
+  //laneData.data = (-1*(((bl-br)/(mr-ml))-src.cols/2)/100);
+  ROS_WARN_STREAM("Data: "<<laneData.data);
+  if (laneData.data >1.5)
+	  laneData.data = 1.5;
+  else if (laneData.data < -1.5)
+	  laneData.data = -1.5;
   lanePub.publish(laneData);
 }
 

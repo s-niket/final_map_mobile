@@ -56,7 +56,7 @@ Navigation::Navigation() {
   velocity = nh.advertise <geometry_msgs::Twist>
   ("/mobile_base/commands/velocity", 500);
 
-  msg.linear.x = 0.5;
+  msg.linear.x = 0.0;
   msg.linear.y = 0.0;
   msg.linear.z = 0.0;
   msg.angular.x = 0.0;
@@ -99,8 +99,7 @@ void Navigation::laneCallback(const std_msgs::Float32::ConstPtr& lane) {
     msg.angular.z = m;
 	ROS_INFO_STREAM("Right: "<<msg.angular.z);
   } else
-    msg.angular.z = 0;
-	ROS_INFO_STREAM("Angular: "<<msg.angular.z);
+      msg.angular.z = 0;
   velocity.publish(msg);
 }
 
@@ -112,7 +111,6 @@ void Navigation::laneCallback(const std_msgs::Float32::ConstPtr& lane) {
 
 void Navigation::signCallback(const std_msgs::Int8::ConstPtr& sign) {
   int flag = sign->data;
-  ROS_INFO_STREAM(inverse_flag);
   ros::Rate loop_rate(50);
   
   if(flag != 0) {
@@ -140,6 +138,7 @@ void Navigation::signCallback(const std_msgs::Int8::ConstPtr& sign) {
   } else {
     inverse_flag = 0;
 	ROS_WARN_STREAM("No Sign");
+	msg.linear.x = 0.5;
   }
 
 }

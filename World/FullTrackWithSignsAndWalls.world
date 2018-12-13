@@ -25,7 +25,7 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>1 1</size>
+              <size>1000 1000</size>
             </plane>
           </geometry>
           <surface>
@@ -143,10 +143,10 @@
       <pose frame=''>13.3214 -3.92169 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>7263 359000000</sim_time>
-      <real_time>26 235109648</real_time>
-      <wall_time>1544407229 797096637</wall_time>
-      <iterations>26086</iterations>
+      <sim_time>7308 685000000</sim_time>
+      <real_time>45 540007857</real_time>
+      <wall_time>1544662481 161227281</wall_time>
+      <iterations>45326</iterations>
       <model name='Demo'>
         <pose frame=''>24.9883 3.95356 0.5 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -165,14 +165,14 @@
         <link name='link_3'>
           <pose frame=''>-5.17315 3.9284 0.5 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
+          <acceleration>0.000353 1.9e-05 0 -3.8e-05 0.000702 0</acceleration>
+          <wrench>0.003688 0.000195 0 0 -0 0</wrench>
         </link>
         <link name='link_3_clone'>
           <pose frame=''>55.0753 3.91345 0.5 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
+          <acceleration>0.000353 1.9e-05 0 -3.8e-05 0.000702 0</acceleration>
+          <wrench>0.003688 0.000195 0 0 -0 0</wrench>
         </link>
         <link name='link_5'>
           <pose frame=''>25.0892 1.88241 0.5 0 -0 0</pose>
@@ -199,44 +199,24 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='SpeedLimit'>
-        <pose frame=''>34.6902 -0.567734 0.5 0.000412 -0.031392 1.55768</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>34.6902 -0.567734 0.5 0.000412 -0.031392 1.55768</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='SpeedLimit_clone'>
-        <pose frame=''>12.3799 8.88069 0.5 -0.000633 0.031389 -1.59096</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>12.3799 8.88069 0.5 -0.000633 0.031389 -1.59096</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
       <model name='Stop Sign'>
-        <pose frame=''>14.1518 -0.632887 1e-06 -8.8e-05 -3.9e-05 -1.61158</pose>
+        <pose frame=''>14.1518 -0.632887 1e-06 1.9e-05 9e-06 -1.61158</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>14.1518 -0.632887 1e-06 -8.8e-05 -3.9e-05 -1.61158</pose>
+          <pose frame=''>14.1518 -0.632887 1e-06 1.9e-05 9e-06 -1.61158</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 -9.8 0 -0 0</acceleration>
-          <wrench>0 0 -9.8 0 -0 0</wrench>
+          <acceleration>0 0 -0.010602 -0.298891 0.120224 -0</acceleration>
+          <wrench>0 0 -0.010602 0 -0 0</wrench>
         </link>
       </model>
       <model name='Stop Sign_clone'>
-        <pose frame=''>38.7682 8.48767 1e-06 4.2e-05 1.9e-05 1.57369</pose>
+        <pose frame=''>38.7682 8.48767 -9e-06 -3.7e-05 1.8e-05 1.57369</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>38.7682 8.48767 1e-06 4.2e-05 1.9e-05 1.57369</pose>
+          <pose frame=''>38.7682 8.48767 -9e-06 -3.7e-05 1.8e-05 1.57369</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 -0.010602 0.303855 -0.107059 0</acceleration>
-          <wrench>0 0 -0.010602 0 -0 0</wrench>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -9.8 0 -0 0</wrench>
         </link>
       </model>
       <model name='ground'>
@@ -253,7 +233,7 @@
         <pose frame=''>0 0 10 0 -0 0</pose>
       </light>
       <light name='sun_0'>
-        <pose frame=''>14.8818 3.59666 10 0 -0 0</pose>
+        <pose frame=''>8.98256 8.16877 10 0 -0 0</pose>
       </light>
       <light name='sun_clone'>
         <pose frame=''>-0.013576 0.006826 6.22492 3.14159 0.107201 3.14159</pose>
@@ -261,7 +241,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>22.3602 -7.25356 96.5609 0.2623 1.53127 0.274969</pose>
+        <pose frame=''>-30.6363 -9.77965 32.945 0 0.69127 -0.025031</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
@@ -399,98 +379,6 @@
       </link>
       <pose frame=''>47.6189 -0.619531 -8e-06 -0.00012 -4.2e-05 -1.61158</pose>
     </model>
-    <model name='SpeedLimit'>
-      <pose frame=''>42.8836 8.67917 0.5 0 -0 0</pose>
-      <static>1</static>
-      <link name='link'>
-        <inertial>
-          <mass>1</mass>
-          <inertia>
-            <ixx>0.083</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.083</iyy>
-            <iyz>0</iyz>
-            <izz>0.083</izz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://SpeedLimit/meshes/SpeedLimit.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://SpeedLimit/meshes/SpeedLimit.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-      </link>
-    </model>
-    <model name='SpeedLimit_clone'>
-      <pose frame=''>12.3799 8.88069 0.5 -0.000633 0.031389 -1.59096</pose>
-      <static>1</static>
-      <link name='link'>
-        <inertial>
-          <mass>1</mass>
-          <inertia>
-            <ixx>0.083</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.083</iyy>
-            <iyz>0</iyz>
-            <izz>0.083</izz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://SpeedLimit/meshes/SpeedLimit.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://SpeedLimit/meshes/SpeedLimit.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-      </link>
-    </model>
     <model name='Demo'>
       <link name='link_2'>
         <pose frame=''>-0.235845 -5.68926 0 0 -0 0</pose>
@@ -585,6 +473,7 @@
         </collision>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
+        <gravity>1</gravity>
       </link>
       <link name='link_2_clone'>
         <pose frame=''>-0.01353 5.6844 0 0 -0 0</pose>
@@ -679,6 +568,7 @@
         </collision>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
+        <gravity>1</gravity>
       </link>
       <link name='link_3'>
         <pose frame=''>-30.1614 -0.025164 0 0 -0 0</pose>
@@ -773,6 +663,7 @@
         </collision>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
+        <gravity>1</gravity>
       </link>
       <link name='link_3_clone'>
         <pose frame=''>30.087 -0.040112 0 0 -0 0</pose>
@@ -867,6 +758,7 @@
         </collision>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
+        <gravity>1</gravity>
       </link>
       <link name='link_5'>
         <pose frame=''>0.100876 -2.07115 0 0 -0 0</pose>
@@ -961,6 +853,7 @@
         </collision>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
+        <gravity>1</gravity>
       </link>
       <link name='link_5_clone'>
         <pose frame=''>0.071816 2.11647 0 0 -0 0</pose>
@@ -1055,6 +948,7 @@
         </collision>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
+        <gravity>1</gravity>
       </link>
       <link name='link_6'>
         <pose frame=''>-24.3807 0.019092 0 0 -0 0</pose>
@@ -1149,6 +1043,7 @@
         </collision>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
+        <gravity>1</gravity>
       </link>
       <link name='link_6_clone'>
         <pose frame=''>24.5319 0.005734 0 0 -0 0</pose>
@@ -1243,6 +1138,7 @@
         </collision>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
+        <gravity>1</gravity>
       </link>
       <static>0</static>
       <allow_auto_disable>1</allow_auto_disable>
