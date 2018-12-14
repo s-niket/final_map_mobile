@@ -33,15 +33,13 @@ add_executable(mapMobile src/main.cpp src/Navigation.cpp src/LaneDetect.cpp src/
 target_link_libraries(mapMobile ${catkin_LIBRARIES} ${OpenCV_LIBS})
 
 
-#############
-## Testing ##
-#############
+if(CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage")
 
-## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_beginner_tutorials.cpp)
-# if(TARGET ${PROJECT_NAME}-test)
-#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
-# endif()
+  add_rostest_gtest(mapMobile_test test/map_mobile_test.launch test/main.cpp test/LaneDetect_Test.cpp)
+  target_link_libraries(mapMobile_test ${catkin_LIBRARIES} ${OpenCV_LIBS})
+  ##add_dependencies(mapMobile_test ${catkin_EXPORTED_TARGETS})
 
-## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)
+
+endif()

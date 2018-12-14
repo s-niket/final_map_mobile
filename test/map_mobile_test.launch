@@ -1,0 +1,5 @@
+
+<launch>
+  <node pkg="final_map_mobile" name="mapMobile" type="mapMobile" /> 
+  <test pkg="final_map_mobile" test-name="mapMobile_test" type="mapMobile_test"/>
+</launch>
