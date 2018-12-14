@@ -84,20 +84,20 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
       catch (cv_bridge::Exception& e) {
           ROS_ERROR("Could not convert from '%s' to 'bgr8'.",
               msg->encoding.c_str());
-      }
-
-  cvtColor(frame, frame_HSV, cv::COLOR_BGR2HSV);
-  cvtColor(frame, frame_Gray, cv::COLOR_BGR2GRAY);
-
-  cv::Mat frame_threshold_white, frame_threshold_yellow, src, frame_mask;
-
-
+      }  
+  cv::Mat src;
   src = frame;
+  proccessImage(src);
+	imshow("lines", src);
+  //waitKey(0);
+}
 
+void LaneDetect::proccessImage(cv::Mat src) {
+  cv::Mat frame_HSV, frame_threshold_white, frame_threshold_yellow, frame_mask;
   // Detect the object based on HSV Range Values
+  cvtColor(frame, frame_HSV, cv::COLOR_BGR2HSV);
   inRange(frame_HSV, cv::Scalar(20, 49, 0), cv::Scalar(30, 255, 255),
           frame_threshold_yellow);
-  inRange(frame_Gray, 200, 255, frame_threshold_white);
   //Combine the two thresholds
   //bitwise_or(frame_threshold_yellow,frame_threshold_white,frame_mask);
 	//Gaussian Blur
@@ -109,9 +109,8 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   cv::Mat edges;
   // Detect Edges
   Canny(gauss_gray,edges,0,50,3);
-  //edges(Range(0,259),Range(0,363)).setTo(0);
-  std::vector < cv::Vec2f > lines;
-
+	
+	std::vector < cv::Vec2f > lines;
 	// Line Detection
   cv::HoughLines(edges, lines, 1, CV_PI / 180, 60, 0, 0);
   float rho_right = 0;
@@ -185,9 +184,6 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   pt7.y = 800;
   line(src, pt7, pt8, cv::Scalar(255, 0, 0), 3, CV_AA);
 
-  imshow("lines", src);
-  //waitKey(0);
-
   std_msgs::Float32 laneData;
   if((pt2.x < 10000 && pt2.x >-10000) && (pt3.x < -100000 || pt3.x > 100000))
 	laneData.data = 0.5;
@@ -204,6 +200,10 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     laneData.data = -1;
   lanePub.publish(laneData);
   ROS_WARN_STREAM("Data: " << laneData.data);
+}
+
+void thresholdImage(cv::Mat src) {
+	
 }
 
 

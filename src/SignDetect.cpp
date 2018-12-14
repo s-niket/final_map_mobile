@@ -91,11 +91,11 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
 
   // Stores the name of the classifiers stored in the directory /classifiers
   std::string stopSignClassifier =
-      "/home/niket/808X_Final_MapMobile/src/final_map_mobile/classifiers/Stopsign_HAAR_19Stages.xml";
+      "/home/zach/catkin_ws/src/final_map_mobile/classifiers/Stopsign_HAAR_19Stages.xml";
   std::string speedLimitClassifier =
-      "/home/niket/808X_Final_MapMobile/src/final_map_mobile/classifiers/Speedlimit_HAAR_ 17Stages.xml";
+      "/home/zach/catkin_ws/src/final_map_mobile/classifiers/Speedlimit_HAAR_ 17Stages.xml";
   std::string trafficLightClassifier =
-      "/home/niket/808X_Final_MapMobile/src/final_map_mobile/classifiers/TrafficLight_HAAR_16Stages.xml";
+      "/home/zach/catkin_ws/src/final_map_mobile/classifiers/TrafficLight_HAAR_16Stages.xml";
 
 
   cv::CascadeClassifier stopSign_cascade;
