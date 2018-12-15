@@ -77,7 +77,7 @@ SignDetect::~SignDetect() {
  * @return void
  */
 
-int SignDetect::imageConvert(const sensor_msgs::ImageConstPtr& msg) {
+void SignDetect::imageConvert(const sensor_msgs::ImageConstPtr& msg) {
 
       // Convert from ROS Image msg to OpenCV image
       try {
@@ -88,7 +88,7 @@ int SignDetect::imageConvert(const sensor_msgs::ImageConstPtr& msg) {
           ROS_ERROR("Could not convert from '%s' to 'bgr8'.",
               msg->encoding.c_str());
       }
-  return detectSign(frame);
+  sign_value = detectSign(frame);
 }
 
 /*
@@ -100,12 +100,8 @@ int SignDetect::imageConvert(const sensor_msgs::ImageConstPtr& msg) {
 
 int SignDetect::detectSign(cv::Mat frame) {
   // Defines the classifiers and checks if they are passed correctly
-  if (!stopSign_cascade.load(stopSignClassifier)) {
-    ROS_WARN_STREAM("--(!)Error loading Stop sign cascade\n");
-  };
-  if (!speedLimit_cascade.load(speedLimitClassifier)) {
-    ROS_WARN_STREAM("--(!)Error loading Speed Limit cascade\n");
-  };
+  stopSign_cascade.load(stopSignClassifier);
+  speedLimit_cascade.load(speedLimitClassifier);
 
   // To store positions of the detected signs
   std::vector < cv::Rect > stops;
@@ -138,27 +134,6 @@ int SignDetect::detectSign(cv::Mat frame) {
       }
     }
   }
-
-  // Speed limit sign detection
-
-  speedLimit_cascade.detectMultiScale(frame_gray, speeds, 1.1, 2,
-                                      0 | cv::CASCADE_SCALE_IMAGE,
-                                      cv::Size(30, 30));
-  for (size_t i = 0; i < speeds.size(); i++) {
-    cv::Point center(speeds[i].x + speeds[i].width / 2,
-                     speeds[i].y + speeds[i].height / 2);
-    cv::ellipse(frame, center,
-                cv::Size(speeds[i].width / 2, speeds[i].height / 2), 0, 0, 360,
-                cv::Scalar(0, 0, 255), 4, 8, 0);
-    cv::putText(frame, "Speed Limit", cv::Point(speeds[i].x, speeds[i].y),
-                cv::FONT_HERSHEY_PLAIN, 5, (0, 0, 0), 2, 8, false);
-    if ((stops[i].width * stops[i].height) < 20000.0) {
-      signData.data = 2;
-    }
-    ROS_WARN_STREAM("Speed Limit Sign Detected!");
-  }
-
-  // Traffic light detection
 
   cv::imshow("Output", frame);
   signPub.publish(signData);

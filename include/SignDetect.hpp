@@ -110,7 +110,7 @@ class SignDetect {
    * @return void
    */
 
-  int imageConvert(const sensor_msgs::ImageConstPtr& msg);
+  void imageConvert(const sensor_msgs::ImageConstPtr& msg);
 
   /*
    * @brief Function to detect signs in a particular frame
