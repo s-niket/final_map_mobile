@@ -55,6 +55,7 @@ int main(int argc, char* argv[]) {
   SignDetect detector;
   LaneDetect follower;
   ros::Rate rate(50);
+
   imageSub = n.subscribe<sensor_msgs::Image>
     ("/camera/rgb/image_raw", 1, &LaneDetect::imageCallback, &follower);
 

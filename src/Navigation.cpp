@@ -131,7 +131,7 @@ void Navigation::signCallback(const std_msgs::Int8::ConstPtr& sign) {
 		ros::Time start = ros::Time::now();
 		while (ros::Time::now() - start < ros::Duration(5.0)) {
 		  ROS_WARN_STREAM("ALTERING SPEED");
-		  //msg.linear.x = 5.0;
+		  msg.linear.x = 0.75;
 		  velocity.publish(msg);
 		}
 	  }
@@ -144,19 +144,19 @@ void Navigation::signCallback(const std_msgs::Int8::ConstPtr& sign) {
 }
 
 /*
- * @brief Function to navigate turtlebot in +Z direction
- * @param none
- * @return void
- */
-
-void Navigation::move() {
-  msg.linear.x = 0.5;
-  msg.linear.y = 0.0;
-  msg.linear.z = 0.0;
-  msg.angular.x = 0.0;
-  msg.angular.y = 0.0;
-  msg.angular.z = 0.0;
-  velocity.publish(msg);
-
-
+  * @brief function for getting the angular velocity published to cmd_velocity
+  * @param
+  * @return double of angular velocity about the z axis
+  */
+double Navigation::getAngularV() {
+  double value = msg.angular.z;
+  return value;
 }
+
+
+
+double Navigation::getLinearV() {
+  double value = msg.linear.x;
+  return value;
+}
+	  

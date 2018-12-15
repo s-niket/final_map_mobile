@@ -95,10 +95,18 @@ class Navigation {
   void laneCallback(const std_msgs::Float32::ConstPtr& lane);
 
   /*
-   * @brief Function to navigate turtlebot in +Z direction
-   * @param none
-   * @return void
+   * @brief function for getting the angular velocity published to cmd_velocity
+   * @param
+   * @return double of angular velocity about the z axis
    */
-  void move();
+  double getAngularV();
+
+  /*
+   * @brief function for getting the linear velocity published to cmd_velocity
+   * @param
+   * @return double of linear velocity in the x axis
+   */
+  double getLinearV();
+
 
 };

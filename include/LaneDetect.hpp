@@ -47,6 +47,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <vector>
 #include <string>
+#include <std_msgs/Float32.h>
 #include "opencv2/opencv.hpp"
 #include "sensor_msgs/Image.h"
 
@@ -62,7 +63,8 @@ class LaneDetect {
   ros::NodeHandle nh;
   // Publisher for lane messages
   ros::Publisher lanePub;
-
+  // Data for Publisher
+  std_msgs::Float32 laneData;
  public:
   // CV frame for storing images
   cv::Mat frame;
@@ -97,7 +99,12 @@ class LaneDetect {
 
   double proccessImage(cv::Mat src);
 
-	
+   /*
+   * @brief function for getting the error betweeen the current heading and current position
+   * @param
+   * @return double of the error
+   */
+  double getLaneData();
   
 	
 };
