@@ -184,8 +184,6 @@ double LaneDetect::proccessImage(cv::Mat src) {
   pt8.x = src.cols/2;
   pt7.y = 800;
   line(src, pt7, pt8, cv::Scalar(255, 0, 0), 3, CV_AA);
-
-  std_msgs::Float32 laneData;
   if((pt2.x < 10000 && pt2.x >-10000) && (pt3.x < -100000 || pt3.x > 100000))
 	laneData.data = 0.5;
   else if((pt3.x < 10000 && pt3.x > -10000) && (pt2.x > 10000 || pt2.x<-10000))
@@ -200,7 +198,18 @@ double LaneDetect::proccessImage(cv::Mat src) {
     laneData.data = -1;
   lanePub.publish(laneData);
   ROS_WARN_STREAM("Data: " << laneData.data);
-  return laneData.data;
+  return laneData.data; 
+  std::cout<<"laneData: "<<laneData.data;
 }
+
+   /*
+   * @brief function for getting the error betweeen the current heading and current position
+   * @param
+   * @return double of the error
+   */
+  double LaneDetect::getLaneData(){
+	  double value = laneData.data;
+	  return value;
+  }
 
 
