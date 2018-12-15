@@ -43,7 +43,7 @@
 #include "LaneDetect.hpp"
 #include "SignDetect.hpp"
 //#include <tf/transform_listener.h>
-#include <costmap_2d/costmap_2d_ros.h>
+//#include <costmap_2d/costmap_2d_ros.h>
 
 int main(int argc, char* argv[]) {
   ros::init(argc, argv, "map_mobile");
@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
     ("/camera/rgb/image_raw", 1, &LaneDetect::imageCallback, &follower);
 
   imageStream = nh.subscribe < sensor_msgs::Image
-      > ("/camera/rgb/image_raw", 1, &SignDetect::imageCallback, &detector);
+      > ("/camera/rgb/image_raw", 1, &SignDetect::imageConvert, &detector);
 
   laneSub = n.subscribe("lane", 1, &Navigation::laneCallback, &mapMobile);
 

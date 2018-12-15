@@ -77,7 +77,7 @@ SignDetect::~SignDetect() {
  * @return void
  */
 
-void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
+int SignDetect::imageConvert(const sensor_msgs::ImageConstPtr& msg) {
 
       // Convert from ROS Image msg to OpenCV image
       try {
@@ -88,20 +88,17 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
           ROS_ERROR("Could not convert from '%s' to 'bgr8'.",
               msg->encoding.c_str());
       }
+  return detectSign(frame);
+}
 
-  // Stores the name of the classifiers stored in the directory /classifiers
-  std::string stopSignClassifier =
-      "/home/zach/catkin_ws/src/final_map_mobile/classifiers/Stopsign_HAAR_19Stages.xml";
-  std::string speedLimitClassifier =
-      "/home/zach/catkin_ws/src/final_map_mobile/classifiers/Speedlimit_HAAR_ 17Stages.xml";
-  std::string trafficLightClassifier =
-      "/home/zach/catkin_ws/src/final_map_mobile/classifiers/TrafficLight_HAAR_16Stages.xml";
+/*
+ * @brief Function to detect signs in a particular frame
+ *        The function uses OpenCV's Cascade Classifier to detect street signs
+ * @param none
+ * @return void
+ */
 
-
-  cv::CascadeClassifier stopSign_cascade;
-  cv::CascadeClassifier speedLimit_cascade;
-  cv::CascadeClassifier trafficLight_cascade;
-
+int SignDetect::detectSign(cv::Mat frame) {
   // Defines the classifiers and checks if they are passed correctly
   if (!stopSign_cascade.load(stopSignClassifier)) {
     ROS_WARN_STREAM("--(!)Error loading Stop sign cascade\n");
@@ -110,14 +107,9 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     ROS_WARN_STREAM("--(!)Error loading Speed Limit cascade\n");
   };
 
-  if (!trafficLight_cascade.load(trafficLightClassifier)) {
-    ROS_WARN_STREAM("--(!)Error loading Traffic Light cascade\n");
-  };
-
   // To store positions of the detected signs
   std::vector < cv::Rect > stops;
   std::vector < cv::Rect > speeds;
-  std::vector < cv::Rect > lights;
   cv::Mat frame_gray;
   cv::cvtColor(frame, frame_gray, cv::COLOR_BGR2GRAY);
   cv::equalizeHist(frame_gray, frame_gray);
@@ -129,64 +121,46 @@ void SignDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   // Stop sign detection
 
   stopSign_cascade.detectMultiScale(frame_gray, stops, 1.1, 2,
-                                      0 | cv::CASCADE_SCALE_IMAGE,
-                                      cv::Size(30, 30));
+                                    0 | cv::CASCADE_SCALE_IMAGE,
+                                    cv::Size(30, 30));
   for (size_t i = 0; i < stops.size(); i++) {
-      cv::Point center(stops[i].x + stops[i].width / 2,
-                       stops[i].y + stops[i].height / 2);
-      if ((stops[i].width * stops[i].height) < 15000.0) {
+    cv::Point center(stops[i].x + stops[i].width / 2,
+                     stops[i].y + stops[i].height / 2);
+    if ((stops[i].width * stops[i].height) < 15000.0) {
       cv::ellipse(frame, center,
                   cv::Size(stops[i].width / 2, stops[i].height / 2), 0, 0, 360,
                   cv::Scalar(255, 0, 255), 4, 8, 0);
       cv::putText(frame, "Stop Sign", cv::Point(stops[i].x, stops[i].y),
                   cv::FONT_HERSHEY_PLAIN, 5, (0, 0, 0), 2, 8, false);
-        if ((stops[i].width * stops[i].height) > 9500.0) {
-          signData.data = 1;
-          ROS_WARN_STREAM("Stop Sign Detected!");
-        }
+      if ((stops[i].width * stops[i].height) > 9500.0) {
+        signData.data = 1;
+        ROS_WARN_STREAM("Stop Sign Detected!");
       }
+    }
   }
 
   // Speed limit sign detection
 
   speedLimit_cascade.detectMultiScale(frame_gray, speeds, 1.1, 2,
-                                        0 | cv::CASCADE_SCALE_IMAGE,
-                                        cv::Size(30, 30));
+                                      0 | cv::CASCADE_SCALE_IMAGE,
+                                      cv::Size(30, 30));
   for (size_t i = 0; i < speeds.size(); i++) {
-      cv::Point center(speeds[i].x + speeds[i].width / 2,
-                 speeds[i].y + speeds[i].height / 2);
-      cv::ellipse(frame, center,
-                  cv::Size(speeds[i].width / 2, speeds[i].height / 2), 0,
-              0, 360, cv::Scalar(0, 0, 255), 4, 8, 0);
-      cv::putText(frame, "Speed Limit", cv::Point(speeds[i].x, speeds[i].y),
-              cv::FONT_HERSHEY_PLAIN, 5,
-              (0, 0, 0), 2, 8, false);
+    cv::Point center(speeds[i].x + speeds[i].width / 2,
+                     speeds[i].y + speeds[i].height / 2);
+    cv::ellipse(frame, center,
+                cv::Size(speeds[i].width / 2, speeds[i].height / 2), 0, 0, 360,
+                cv::Scalar(0, 0, 255), 4, 8, 0);
+    cv::putText(frame, "Speed Limit", cv::Point(speeds[i].x, speeds[i].y),
+                cv::FONT_HERSHEY_PLAIN, 5, (0, 0, 0), 2, 8, false);
     if ((stops[i].width * stops[i].height) < 20000.0) {
-        signData.data = 2;
-      }
-      ROS_WARN_STREAM("Speed Limit Sign Detected!");
+      signData.data = 2;
+    }
+    ROS_WARN_STREAM("Speed Limit Sign Detected!");
   }
 
   // Traffic light detection
 
-  trafficLight_cascade.detectMultiScale(frame_gray, lights, 1.1, 2,
-                                          0 | cv::CASCADE_SCALE_IMAGE,
-                                          cv::Size(30, 30));
-  for (size_t i = 0; i < lights.size(); i++) {
-      cv::Point center(lights[i].x + lights[i].width / 2,
-                   lights[i].y + lights[i].height / 2);
-      cv::ellipse(frame, center,
-              cv::Size(lights[i].width / 2, lights[i].height / 2), 0,
-              0, 360, cv::Scalar(255, 0, 0), 4, 8, 0);
-      cv::putText(frame, "Traffic Light", cv::Point(lights[i].x, lights[i].y),
-              cv::FONT_HERSHEY_PLAIN,
-              5, (0, 0, 0), 2, 8, false);
-      signData.data = 3;
-      ROS_WARN_STREAM("Traffic Light Detected");
-
-  }
-
-  imshow("Output", frame);
+  cv::imshow("Output", frame);
   signPub.publish(signData);
-
+  return signData.data;
 }
