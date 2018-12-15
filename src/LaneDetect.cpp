@@ -92,9 +92,10 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
   //waitKey(0);
 }
 
-void LaneDetect::proccessImage(cv::Mat src) {
+double LaneDetect::proccessImage(cv::Mat src) {
   cv::Mat frame_HSV, frame_threshold_white, frame_threshold_yellow, frame_mask;
   // Detect the object based on HSV Range Values
+  frame = src;
   cvtColor(frame, frame_HSV, cv::COLOR_BGR2HSV);
   inRange(frame_HSV, cv::Scalar(20, 49, 0), cv::Scalar(30, 255, 255),
           frame_threshold_yellow);
@@ -193,18 +194,13 @@ void LaneDetect::proccessImage(cv::Mat src) {
 	laneData.data = 0;
   else
     laneData.data = (-1*(((src.rows-bc)/mc)-src.cols/2)/100);
-  //laneData.data = (-1*(((bl-br)/(mr-ml))-src.cols/2)/100);
   if (laneData.data > 1)
     laneData.data = 1;
   else if (laneData.data < -1)
     laneData.data = -1;
   lanePub.publish(laneData);
   ROS_WARN_STREAM("Data: " << laneData.data);
+  return laneData.data;
 }
-
-void thresholdImage(cv::Mat src) {
-	
-}
-
 
 

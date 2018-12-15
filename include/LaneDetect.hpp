@@ -95,7 +95,7 @@ class LaneDetect {
    */
   void imageCallback(const sensor_msgs::ImageConstPtr& msg);
 
-  void proccessImage(cv::Mat src);
+  double proccessImage(cv::Mat src);
 
 	
   
