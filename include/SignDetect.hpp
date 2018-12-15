@@ -51,6 +51,7 @@
 #include "opencv2/opencv.hpp"
 #include "opencv2/objdetect.hpp"
 #include "sensor_msgs/Image.h"
+#include "std_msgs/Int8.h"
 
 /*
  * @brief Class SignDetect
@@ -70,12 +71,21 @@ class SignDetect {
   cv_bridge::CvImagePtr cv_ptr;
   // Define flag for signs
   int flag;
+  // OpenCV frame
+  cv::Mat frame;
+  // Stores the name of the classifiers stored in the directory /classifiers
+  std::string stopSignClassifier = "classifiers/Stopsign_HAAR_19Stages.xml";
+  std::string speedLimitClassifier = "classifiers/Speedlimit_HAAR_ 17Stages.xml";
+  // To store the classifier data
+  cv::CascadeClassifier stopSign_cascade;
+  cv::CascadeClassifier speedLimit_cascade;
+
+
+
 
 
  public:
-  // OpenCV frame
-  cv::Mat frame;
-
+  int sign_value;
   /*
    * @brief Constructor for SignDetect class
    *        Defines the publisher and subscribers for the class
@@ -100,7 +110,15 @@ class SignDetect {
    * @return void
    */
 
-  void imageCallback(const sensor_msgs::ImageConstPtr& msg);
+  void imageConvert(const sensor_msgs::ImageConstPtr& msg);
+
+  /*
+   * @brief Function to detect signs in a particular frame
+   * @param none
+   * @return void
+   */
+
+  int detectSign(cv::Mat frame);
 
 };
 

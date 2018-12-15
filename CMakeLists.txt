@@ -37,7 +37,7 @@ if(CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage")
 
-  add_rostest_gtest(mapMobile_test test/map_mobile_test.launch test/main.cpp test/LaneDetect_Test.cpp src/LaneDetect.cpp)
+  add_rostest_gtest(mapMobile_test test/map_mobile_test.launch test/main.cpp test/LaneDetect_Test.cpp test/SignDetect_Test.cpp src/LaneDetect.cpp src/SignDetect.cpp)
   target_link_libraries(mapMobile_test ${catkin_LIBRARIES} ${OpenCV_LIBS})
   ##add_dependencies(mapMobile_test ${catkin_EXPORTED_TARGETS})
 
