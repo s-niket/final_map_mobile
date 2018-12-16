@@ -12,7 +12,7 @@ The final world is a two lane road that forms an oval with walls and obstacles o
 <img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/world.png"> </img>
 
 
-This software was developed in ROS Kinetic and Gazebo relying on the turtlebot 2 to simulate for our implementation. The code is witten in c++ and makes use of OpenCV 3.2 for several prebuilt computer vision algorithms. 
+This software was developed in ROS Kinetic and Gazebo relying on the turtlebot 2 to simulate for our implementation. The code is witten in C++ and makes use of OpenCV 3.2 for several prebuilt computer vision algorithms. 
 ### Program Flow
 The program follows the path shown in the diagram below.
 
@@ -47,18 +47,18 @@ mkdir Images classifiers
 cp <path to catkin ws>/Images/* Images
 cp <path to catkin ws>/classifiers/* classifiers
 ```
-To run the demo project
-```
-cd <path to catkin_ws>
-roslaunch final_map_mobile demo.launch
-```
-The gazebo simulation starts in a paused state press play to begin the simulation.
-On the Rviz, add Display for Map and subscribe to /map topic to view the generated map. Once satistfied, run the following commands by starting two new terminals: 
+To run the demo project, open two terminals, one for roscore(for map saving) and one for launching the demo:
 ```
 Terminal 1: 
 roscore
 
-Terminal 2: 
+Terminal 2:
+cd <path to catkin_ws>
+roslaunch final_map_mobile demo.launch
+```
+The gazebo simulation starts in a paused state press play to begin the simulation.
+On the Rviz, add Display for Map and subscribe to /map topic to view the generated map. Once satistfied, run the following commands by starting a new terminals: 
+``` 
 cd <path where you want to save the map> 
 rosrun map_server map_saver -f <map-name>
 ```
