@@ -7,7 +7,7 @@
 ## Overview
 This project will serve as the Final For ENPM808X software development for Robotics. One of the most important parts of an autonomous vehicle is having accurate maps that the robot can use as a reference. In an attempt to help provide this information this project is developing a autonomous vehicle that will travel along an unknown road and map the surrounding area. Inorder to do this safely the robot will have a lane keeping algorithm and sign detection algorithms that will allow it to behave saftly in its enviroment.
 
-The final world is a two lane road that forms an oval with walls and obsticles on either side for the slam algorithm to pickup on. There are also several signs throughout the world that the robot interact with. There are several other worlds in the package the user can use to demonstrate more specific functionality.
+The final world is a two lane road that forms an oval with walls and obstacles on either side for the slam algorithm to pickup on. There are also several signs throughout the world that the robot interact with. There are several other worlds in the package the user can use to demonstrate more specific functionality.
 
 <img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/world.png"> </img>
 
@@ -26,17 +26,18 @@ The sign detection algorithm uses Haar Cascade Classifiers to find signs in the 
 
 <img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/stop_yes_stop.png"> </img>
 
-### Personel
+### Personnel
 The development group is made up of Niket Shah and Zachary Zimits who also worked together on the 808XMidterm Project. Niket Shah got his undergad in Electronics and Telecomunication at Mumbai Univeristy. While Zachary Zimits majored in Mechanical Engineering at North Carolina State University.  
 
 ## Operation/run/test/demo steps
 
 This setup will assume that you already have a catkin workspace setup on your computer
 ```
+cd <path to catkin_ws>/src
 git clone https://github.com/zzimits/final_map_mobile
-cd <path to catkin ws>
-source devel/setup.bash
+cd ..
 catkin_make
+source devel/setup.bash
 ```
 	
 Next the classifiers and test images must be copied into the ros enviroment so they can be accessed by the program.
@@ -52,8 +53,18 @@ cd <path to catkin_ws>
 roslaunch final_map_mobile demo.launch
 ```
 The gazebo simulation starts in a paused state press play to begin the simulation.
-The map will be saved to the map folder of the project directory.
-###Testing
+On the Rviz, add Display for Map and subscribe to /map topic to view the generated map. Once satistfied, run the following commands by starting two new terminals: 
+```
+Terminal 1: 
+roscore
+
+Terminal 2: 
+cd <path where you want to save the map> 
+rosrun map_server map_saver -f <map-name>
+```
+The map files generated will consist of a .pgm and a .yaml file. The .pgm file can be viewed using the default image viewers.
+Sample map is saved in the map folder of the project directory.
+## Testing
 To run tests
 ```
 cd <path to catkin ws>
