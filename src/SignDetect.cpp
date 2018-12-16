@@ -37,17 +37,20 @@
  *        of road signs
  */
 
+#include <cv_bridge/cv_bridge.h>
+#include <image_transport/image_transport.h>
 #include <ros/ros.h>
 #include <sstream>
-#include "std_msgs/Int8.h"
-#include <image_transport/image_transport.h>
+#include <vector>
+#include <string>
+#include <iostream>
 #include <opencv2/highgui/highgui.hpp>
-#include <cv_bridge/cv_bridge.h>
-#include "opencv2/opencv.hpp"
-#include "opencv2/objdetect.hpp"
+#include "sensor_msgs/Image.h"
+#include "std_msgs/Int8.h"
 #include "Navigation.hpp"
 #include "SignDetect.hpp"
-
+#include "opencv2/opencv.hpp"
+#include "opencv2/objdetect.hpp"
 /*
  * @brief Constructor for class SignDetect
  *        Defines the publisher for the detected signs
@@ -78,7 +81,6 @@ SignDetect::~SignDetect() {
  */
 
 void SignDetect::imageConvert(const sensor_msgs::ImageConstPtr& msg) {
-
       // Convert from ROS Image msg to OpenCV image
       try {
           cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);

@@ -37,10 +37,14 @@
  *        and street signs information
  */
 
-#include <string>
-#include <iostream>
+#ifndef INCLUDE_NAVIGATION_HPP_
+#define INCLUDE_NAVIGATION_HPP_
+
+
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
+#include <string>
+#include <iostream>
 #include "std_msgs/Float32.h"
 #include "std_msgs/Int8.h"
 
@@ -95,9 +99,9 @@ class Navigation {
   void laneCallback(const std_msgs::Float32::ConstPtr& lane);
 
   /*
-   * @brief function for getting the angular velocity published to cmd_velocity
-   * @param
-   * @return double of angular velocity about the z axis
+   * @brief Function to navigate turtlebot in +Z direction
+   * @param none
+   * @return void
    */
   double getAngularV();
 
@@ -110,3 +114,5 @@ class Navigation {
 
 
 };
+
+#endif  // INCLUDE_NAVIGATION_HPP_

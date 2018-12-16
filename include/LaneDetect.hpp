@@ -39,17 +39,16 @@
 #ifndef INCLUDE_LANEDETECT_HPP_
 #define INCLUDE_LANEDETECT_HPP_
 
-
+#include <vector>
+#include <string>
 #include <iostream>
 #include <ros/ros.h>
 #include <image_transport/image_transport.h>
-#include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
-#include <vector>
-#include <string>
 #include <std_msgs/Float32.h>
-#include "opencv2/opencv.hpp"
+#include <opencv2/highgui/highgui.hpp>
 #include "sensor_msgs/Image.h"
+#include "opencv2/opencv.hpp"
 
 /*
  * @brief Class LaneDetect
@@ -108,5 +107,4 @@ class LaneDetect {
   
 	
 };
-
-#endif
+#endif  // INCLUDE_LANEDETECT_HPP_

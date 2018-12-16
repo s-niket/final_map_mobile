@@ -1,0 +1,5 @@
+<map id="include/Navigation.hpp" name="include/Navigation.hpp">
+<area shape="rect" id="node1" title="Header of class Navigation to navigate around roads using lane and street signs information." alt="" coords="72,5,227,32"/>
+<area shape="rect" id="node2" href="$_navigation_8cpp.html" title="Implementation of header Navigation.hpp to navigate roads using lane information and street signs inf..." alt="" coords="5,80,136,107"/>
+<area shape="rect" id="node3" href="$_sign_detect_8cpp.html" title="Implementation of header SignDetect.hpp for detection of road signs." alt="" coords="161,80,295,107"/>
+</map>
