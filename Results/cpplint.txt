@@ -1,0 +1,14 @@
+cpplint */*.cpp
+Done processing src/LaneDetect.cpp
+Done processing src/main.cpp
+Done processing src/Navigation.cpp
+Done processing src/SignDetect.cpp
+Done processing test/LaneDetect_Test.cpp
+Done processing test/main.cpp
+Done processing test/SignDetect_Test.cpp
+
+cpplint */*.hpp
+Done processing include/LaneDetect.hpp
+Done processing include/Navigation.hpp
+Done processing include/SignDetect.hpp
+
