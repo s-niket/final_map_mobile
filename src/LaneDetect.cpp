@@ -123,8 +123,10 @@ double LaneDetect::proccessImage(cv::Mat src) {
   float theta_left = 0;
   float num_right = 0;
   float num_left = 0;
+  int i = 0;
   // Line Averaging
-  for (size_t i = 0; i < lines.size(); i++) {
+  std::vector< cv::Vec2f >::iterator ptr;
+  for (ptr = lines.begin(); ptr < lines.end(); ptr++) {
     float rho = lines[i][0];
     float theta = lines[i][1];
     if (theta < 1.5708) {
@@ -136,6 +138,7 @@ double LaneDetect::proccessImage(cv::Mat src) {
       theta_right = theta_right + theta;
       num_right++;
     }
+    i++;
   }
   rho_right = rho_right / num_right;
   theta_right = theta_right / num_right;

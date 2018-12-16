@@ -9,22 +9,22 @@ This project will serve as the Final For ENPM808X software development for Robot
 
 The final world is a two lane road that forms an oval with walls and obsticles on either side for the slam algorithm to pickup on. There are also several signs throughout the world that the robot interact with. There are several other worlds in the package the user can use to demonstrate more specific functionality.
 
-<img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/rviz.png" width="400"> </img>
-<img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/rviz.png" width="400"> </img>
+<img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/world.png"> </img>
+
 
 This software was developed in ROS Kinetic and Gazebo relying on the turtlebot 2 to simulate for our implementation. The code is witten in c++ and makes use of OpenCV 3.2 for several prebuilt computer vision algorithms. 
 ### Program Flow
 The program follows the path shown in the diagram below.
 
-<img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/rviz.png"> </img>
+<img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/UML.png"> </img>
 
 The image is passed into the lane detector class and sign detector class through two seperate call backs. The lane detector class starts by coverting the image to HSV and selecting the yellow pixels through a threshold operation. After that a gausian filter is applied before canny edge detection is used reduce the image further. A Hough transform is used to find all of the line remaining in the image. The lines are divided into two groups based on their slope and then averaged to find the two borders of the current lane. These are averaged to find the center of the line and then proportional control is used to find an angular velocity command that will be sent to the navigation class.
 
-<img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/rviz.png"> </img>
+<img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/lanes.png"> </img>
 
 The sign detection algorithm uses Haar Cascade Classifiers to find signs in the input images. There are two different classifiers for stop signs and speed limit signs. The cascade function returns the position and region of interest for any signs in the image. Once the region of interest is large enough the sign detector will send a message to the navigator class informing it of the type of sign it has found. 
 
-<img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/rviz.png"> </img>
+<img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/stop_yes_stop.png"> </img>
 
 ### Personel
 The development group is made up of Niket Shah and Zachary Zimits who also worked together on the 808XMidterm Project. Niket Shah got his undergad in Electronics and Telecomunication at Mumbai Univeristy. While Zachary Zimits majored in Mechanical Engineering at North Carolina State University.  
@@ -46,6 +46,13 @@ mkdir Images classifiers
 cp <path to catkin ws>/Images/* Images
 cp <path to catkin ws>/classifiers/* classifiers
 ```
+To run the demo project
+```
+cd <path to catkin_ws>
+roslaunch final_map_mobile demo.launch
+```
+The gazebo simulation starts in a paused state press play to begin the simulation.
+The map will be saved to the map folder of the project directory.
 ###Testing
 To run tests
 ```
