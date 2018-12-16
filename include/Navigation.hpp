@@ -111,8 +111,6 @@ class Navigation {
    * @return double of linear velocity in the x axis
    */
   double getLinearV();
-
-
 };
 
 #endif  // INCLUDE_NAVIGATION_HPP_

@@ -39,16 +39,16 @@
 #ifndef INCLUDE_LANEDETECT_HPP_
 #define INCLUDE_LANEDETECT_HPP_
 
-#include <vector>
-#include <string>
-#include <iostream>
 #include <ros/ros.h>
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <std_msgs/Float32.h>
-#include <opencv2/highgui/highgui.hpp>
+#include <vector>
+#include <string>
+#include <iostream>
 #include "sensor_msgs/Image.h"
 #include "opencv2/opencv.hpp"
+#include <opencv2/highgui/highgui.hpp>
 
 /*
  * @brief Class LaneDetect
@@ -64,6 +64,7 @@ class LaneDetect {
   ros::Publisher lanePub;
   // Data for Publisher
   std_msgs::Float32 laneData;
+
  public:
   // CV frame for storing images
   cv::Mat frame;
@@ -104,7 +105,5 @@ class LaneDetect {
    * @return double of the error
    */
   double getLaneData();
-  
-	
 };
 #endif  // INCLUDE_LANEDETECT_HPP_

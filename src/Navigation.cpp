@@ -37,15 +37,13 @@
  *        using lane information and street signs information
  */
 
-#include <iostream>
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/Int8.h>
-#include <string>
 #include <iostream>
-#include "Navigation.hpp"
 #include <string>
+#include "Navigation.hpp"
 
 /*
  * @brief Constructor for Navigation class

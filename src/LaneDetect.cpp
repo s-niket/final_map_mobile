@@ -37,14 +37,14 @@
  *        detection for navigation of roads
  */
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <sstream>
 #include <ros/ros.h>
 #include <ros/console.h>
 #include <std_msgs/Float32.h>
 #include <cv_bridge/cv_bridge.h>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
 #include <opencv2/highgui/highgui.hpp>
 #include "LaneDetect.hpp"
 
@@ -203,7 +203,7 @@ double LaneDetect::proccessImage(cv::Mat src) {
     laneData.data = -1;
   lanePub.publish(laneData);
   ROS_WARN_STREAM("Data: " << laneData.data);
-  return laneData.data; 
+  return laneData.data;
 }
 
 /*
@@ -211,7 +211,7 @@ double LaneDetect::proccessImage(cv::Mat src) {
 * @param
 * @return double of the error
 */
-double LaneDetect::getLaneData(){
+double LaneDetect::getLaneData() {
   double value = laneData.data;
   return value;
 }

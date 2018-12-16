@@ -52,7 +52,7 @@ TEST(TestSignDetect, Server_Existance_Test) {
   ros::NodeHandle n;
   // Check the Existence of Service
 
-  EXPECT_EQ(1,1);
+  EXPECT_EQ(1, 1);
 }
 
 /*
