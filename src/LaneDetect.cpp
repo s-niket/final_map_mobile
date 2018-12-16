@@ -39,9 +39,14 @@
 
 #include <ros/ros.h>
 #include <ros/console.h>
-#include "LaneDetect.hpp"
 #include <std_msgs/Float32.h>
+#include <cv_bridge/cv_bridge.h>
+#include <iostream>
+#include <vector>
+#include <string>
 #include <sstream>
+#include <opencv2/highgui/highgui.hpp>
+#include "LaneDetect.hpp"
 
 
 /*
@@ -52,7 +57,7 @@
  */
 
 LaneDetect::LaneDetect() {
-  lanePub = nh.advertise < std_msgs::Float32 >("lane",1000);
+  lanePub = nh.advertise < std_msgs::Float32 > ("lane", 1000);
 }
 
 /*
@@ -84,12 +89,11 @@ void LaneDetect::imageCallback(const sensor_msgs::ImageConstPtr& msg) {
       catch (cv_bridge::Exception& e) {
           ROS_ERROR("Could not convert from '%s' to 'bgr8'.",
               msg->encoding.c_str());
-      }  
+      }
   cv::Mat src;
   src = frame;
   proccessImage(src);
-	imshow("lines", src);
-  //waitKey(0);
+  imshow("lines", src);
 }
 
 double LaneDetect::proccessImage(cv::Mat src) {
@@ -99,20 +103,19 @@ double LaneDetect::proccessImage(cv::Mat src) {
   cvtColor(frame, frame_HSV, cv::COLOR_BGR2HSV);
   inRange(frame_HSV, cv::Scalar(20, 49, 0), cv::Scalar(30, 255, 255),
           frame_threshold_yellow);
-  //Combine the two thresholds
-  //bitwise_or(frame_threshold_yellow,frame_threshold_white,frame_mask);
-	//Gaussian Blur
+  // Combine the two thresholds
+  // Bitwise_or(frame_threshold_yellow,frame_threshold_white,frame_mask);
+  // Gaussian Blur
   cv::Mat gauss_gray;
   cv::Size kernel_size;
   kernel_size.height = 5;
   kernel_size.width = 5;
-  GaussianBlur(frame_threshold_yellow,gauss_gray, kernel_size,0,0,1);
+  GaussianBlur(frame_threshold_yellow, gauss_gray, kernel_size, 0, 0, 1);
   cv::Mat edges;
   // Detect Edges
-  Canny(gauss_gray,edges,0,50,3);
-	
-	std::vector < cv::Vec2f > lines;
-	// Line Detection
+  Canny(gauss_gray, edges, 0, 50, 3);
+  std::vector < cv::Vec2f > lines;
+  // Line Detection
   cv::HoughLines(edges, lines, 1, CV_PI / 180, 60, 0, 0);
   float rho_right = 0;
   float rho_left = 0;
@@ -121,19 +124,18 @@ double LaneDetect::proccessImage(cv::Mat src) {
   float num_right = 0;
   float num_left = 0;
   // Line Averaging
-  for( size_t i = 0; i < lines.size(); i++ )
-  {
+  for (size_t i = 0; i < lines.size(); i++) {
     float rho = lines[i][0];
-	float theta = lines[i][1];
-    if( theta <1.5708) {
+    float theta = lines[i][1];
+    if (theta < 1.5708) {
       rho_left = rho_left + rho;
       theta_left = theta_left + theta;
-	  num_left++;
-	} else {
-	  rho_right = rho_right + rho;
-	  theta_right = theta_right + theta;
-	  num_right++;
-	}
+      num_left++;
+    } else {
+      rho_right = rho_right + rho;
+      theta_right = theta_right + theta;
+      num_right++;
+    }
   }
   rho_right = rho_right / num_right;
   theta_right = theta_right / num_right;
@@ -168,15 +170,15 @@ double LaneDetect::proccessImage(cv::Mat src) {
   double orient = 0;
   double mc = 1;
   double bc = 0;
-  ROS_INFO_STREAM("pt5: "<<pt3.x<<" pt6: "<<pt2.x);
+  ROS_INFO_STREAM("pt5: " << pt3.x << " pt6: " << pt2.x);
   if (pt5.x != pt6.x && pt5.y != pt6.y) {
     mc = (pt5.y - pt6.y)/(pt5.x - pt6.x);
-    bc = pt5.y-(mc*pt5.x);
-    orient = (src.rows-bc)/mc;
+    bc = pt5.y - (mc * pt5.x);
+    orient = (src.rows - bc) / mc;
   } else {
     orient = 0;
   }
-  ROS_INFO_STREAM("mc: "<<mc<<" bc: "<<bc);
+  ROS_INFO_STREAM("mc: " << mc << " bc: " << bc);
   line(src, pt5, pt6, cv::Scalar(0, 255, 0), 3, CV_AA);
   // Current Heading
   pt7.x = src.cols/2;
@@ -186,14 +188,16 @@ double LaneDetect::proccessImage(cv::Mat src) {
   line(src, pt7, pt8, cv::Scalar(255, 0, 0), 3, CV_AA);
 
   std_msgs::Float32 laneData;
-  if((pt2.x < 10000 && pt2.x >-10000) && (pt3.x < -100000 || pt3.x > 100000))
-	laneData.data = 0.5;
-  else if((pt3.x < 10000 && pt3.x > -10000) && (pt2.x > 10000 || pt2.x<-10000))
+  if ((pt2.x < 10000 && pt2.x > -10000) && (pt3.x < -100000 || pt3.x > 100000))
+    laneData.data = 0.5;
+  else if ((pt3.x < 10000 && pt3.x > -10000)
+      && (pt2.x > 10000 || pt2.x < -10000))
     laneData.data = -0.5;
-  else if((pt3.x > 10000 || pt3.x<-10000) && (pt2.x > 10000 || pt2.x<-10000))
-	laneData.data = 0;
+  else if ((pt3.x > 10000 || pt3.x < -10000)
+      && (pt2.x > 10000 || pt2.x < -10000))
+    laneData.data = 0;
   else
-    laneData.data = (-1*(((src.rows-bc)/mc)-src.cols/2)/100);
+    laneData.data = (-1 * (((src.rows - bc) / mc) - src.cols / 2) / 100);
   if (laneData.data > 1)
     laneData.data = 1;
   else if (laneData.data < -1)

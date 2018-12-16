@@ -40,18 +40,17 @@
 #ifndef INCLUDE_SIGNDETECT_HPP_
 #define INCLUDE_SIGNDETECT_HPP_
 
-
-#include <iostream>
 #include <ros/ros.h>
-#include <image_transport/image_transport.h>
-#include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
+#include <image_transport/image_transport.h>
 #include <vector>
 #include <string>
-#include "opencv2/opencv.hpp"
-#include "opencv2/objdetect.hpp"
+#include <iostream>
+#include <opencv2/highgui/highgui.hpp>
 #include "sensor_msgs/Image.h"
 #include "std_msgs/Int8.h"
+#include "opencv2/opencv.hpp"
+#include "opencv2/objdetect.hpp"
 
 /*
  * @brief Class SignDetect
@@ -75,14 +74,11 @@ class SignDetect {
   cv::Mat frame;
   // Stores the name of the classifiers stored in the directory /classifiers
   std::string stopSignClassifier = "classifiers/Stopsign_HAAR_19Stages.xml";
-  std::string speedLimitClassifier = "classifiers/Speedlimit_HAAR_ 17Stages.xml";
+  std::string speedLimitClassifier = "classifiers/Speedlimit_HAAR_ 17Stages"
+      ".xml";
   // To store the classifier data
   cv::CascadeClassifier stopSign_cascade;
   cv::CascadeClassifier speedLimit_cascade;
-
-
-
-
 
  public:
   int sign_value;
@@ -119,8 +115,5 @@ class SignDetect {
    */
 
   int detectSign(cv::Mat frame);
-
 };
-
-
-#endif  // INCLUDE_OBSTACLEDETECTOR_HPP_
+#endif  // INCLUDE_SIGNDETECT_HPP_

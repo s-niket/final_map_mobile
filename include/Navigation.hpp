@@ -37,10 +37,14 @@
  *        and street signs information
  */
 
-#include <string>
-#include <iostream>
+#ifndef INCLUDE_NAVIGATION_HPP_
+#define INCLUDE_NAVIGATION_HPP_
+
+
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
+#include <string>
+#include <iostream>
 #include "std_msgs/Float32.h"
 #include "std_msgs/Int8.h"
 
@@ -100,5 +104,6 @@ class Navigation {
    * @return void
    */
   void move();
-
 };
+
+#endif  // INCLUDE_NAVIGATION_HPP_

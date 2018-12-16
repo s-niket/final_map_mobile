@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
 
   signSub = n.subscribe("signs", 1, &Navigation::signCallback, &mapMobile);
 
-  while(ros::ok()) {
+  while (ros::ok()) {
     ros::spinOnce();
     rate.sleep();
   }
