@@ -29,7 +29,7 @@ The sign detection algorithm uses Haar Cascade Classifiers to find signs in the 
 ### Personnel
 The development group is made up of Niket Shah and Zachary Zimits who also worked together on the 808XMidterm Project. Niket Shah got his undergad in Electronics and Telecomunication at Mumbai Univeristy. While Zachary Zimits majored in Mechanical Engineering at North Carolina State University.  
 
-## Operation/run/test/demo steps
+## Operation/Demo steps
 
 This setup will assume that you already have a catkin workspace setup on your computer
 ```
@@ -104,12 +104,12 @@ If the robot is experiencing large changes in z orientation when it approches a 
 
 This project was done using Pair Proggramming. The development team took turns serving as driver and navigator with Niket show working on driver for the sign detection and Zachary Zimits working as the driver for the lane detection.
 
-###Product Backlog Link<br/>
+### Product Backlog Link<br/>
 https://docs.google.com/spreadsheets/d/14xQGIgG6C0ESPju1HD3xA1dDB8FOpix7ZD7LX9gpMUo/edit?usp=sharing<br/>
 ####Sprint Planning Link<br/>
 https://docs.google.com/spreadsheets/d/153FpOd2dDLhHrVDaHs887Bl2UnKq0t-d3hJzFEle1B4/edit?usp=sharing<br/>
 
-###Doxygen Documentation
+### Doxygen Documentation
 The generated doxygen documentation can be found at this link <br/>
 https://htmlpreview.github.io/?https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Results/html/index.html<br/>
 Or in /Results/html/index.html file
