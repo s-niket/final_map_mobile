@@ -22,7 +22,7 @@ The image is passed into the lane detector class and sign detector class through
 
 <img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/lanes.png"> </img>
 
-The sign detection algorithm uses Haar Cascade Classifiers to find signs in the input images. There are two different classifiers for stop signs and speed limit signs. The cascade function returns the position and region of interest for any signs in the image. Once the region of interest is large enough the sign detector will send a message to the navigator class informing it of the type of sign it has found. 
+The sign detection algorithm uses Haar Cascade Classifiers to find signs in the input images. There are two different classifiers for stop signs and speed limit signs. The cascade function returns the position and region of interest for any signs in the image. Once the region of interest is large enough the sign detector will send a message to the navigator class informing it of the type of sign it has found. The method of training the cascades can be found here: https://docs.opencv.org/3.4/dc/d88/tutorial_traincascade.html
 
 <img src="https://raw.githubusercontent.com/zzimits/final_map_mobile/master/Images/stop_yes_stop.png"> </img>
 
@@ -115,6 +115,8 @@ https://htmlpreview.github.io/?https://raw.githubusercontent.com/zzimits/final_m
 Or in /Results/html/index.html file
 
 ## Video Presentation
+Presentation: https://youtu.be/kymJSMamifE
+Demonstration: https://youtu.be/O5tHOFdxM_M
 
 ## License
 
