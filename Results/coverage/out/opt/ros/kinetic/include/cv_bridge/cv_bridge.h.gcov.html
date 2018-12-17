@@ -1,0 +1,505 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage.info - /opt/ros/kinetic/include/cv_bridge/cv_bridge.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">opt/ros/kinetic/include/cv_bridge</a> - cv_bridge.h<span style="font-size: 80%;"> (source / <a href="cv_bridge.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2018-12-15 17:19:30</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*********************************************************************</a>
+<span class="lineNum">       2 </span>            : * Software License Agreement (BSD License)
+<span class="lineNum">       3 </span>            : *
+<span class="lineNum">       4 </span>            : *  Copyright (c) 2011, Willow Garage, Inc,
+<span class="lineNum">       5 </span>            : *  Copyright (c) 2015, Tal Regev.
+<span class="lineNum">       6 </span>            : *  All rights reserved.
+<span class="lineNum">       7 </span>            : *
+<span class="lineNum">       8 </span>            : *  Redistribution and use in source and binary forms, with or without
+<span class="lineNum">       9 </span>            : *  modification, are permitted provided that the following conditions
+<span class="lineNum">      10 </span>            : *  are met:
+<span class="lineNum">      11 </span>            : *
+<span class="lineNum">      12 </span>            : *   * Redistributions of source code must retain the above copyright
+<span class="lineNum">      13 </span>            : *     notice, this list of conditions and the following disclaimer.
+<span class="lineNum">      14 </span>            : *   * Redistributions in binary form must reproduce the above
+<span class="lineNum">      15 </span>            : *     copyright notice, this list of conditions and the following
+<span class="lineNum">      16 </span>            : *     disclaimer in the documentation and/or other materials provided
+<span class="lineNum">      17 </span>            : *     with the distribution.
+<span class="lineNum">      18 </span>            : *   * Neither the name of the Willow Garage nor the names of its
+<span class="lineNum">      19 </span>            : *     contributors may be used to endorse or promote products derived
+<span class="lineNum">      20 </span>            : *     from this software without specific prior written permission.
+<span class="lineNum">      21 </span>            : *
+<span class="lineNum">      22 </span>            : *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+<span class="lineNum">      23 </span>            : *  &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+<span class="lineNum">      24 </span>            : *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+<span class="lineNum">      25 </span>            : *  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+<span class="lineNum">      26 </span>            : *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+<span class="lineNum">      27 </span>            : *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+<span class="lineNum">      28 </span>            : *  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+<span class="lineNum">      29 </span>            : *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+<span class="lineNum">      30 </span>            : *  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+<span class="lineNum">      31 </span>            : *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+<span class="lineNum">      32 </span>            : *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+<span class="lineNum">      33 </span>            : *  POSSIBILITY OF SUCH DAMAGE.
+<span class="lineNum">      34 </span>            : *********************************************************************/
+<span class="lineNum">      35 </span>            : 
+<span class="lineNum">      36 </span>            : #ifndef CV_BRIDGE_CV_BRIDGE_H
+<span class="lineNum">      37 </span>            : #define CV_BRIDGE_CV_BRIDGE_H
+<span class="lineNum">      38 </span>            : 
+<span class="lineNum">      39 </span>            : #include &lt;sensor_msgs/Image.h&gt;
+<span class="lineNum">      40 </span>            : #include &lt;sensor_msgs/CompressedImage.h&gt;
+<span class="lineNum">      41 </span>            : #include &lt;sensor_msgs/image_encodings.h&gt;
+<span class="lineNum">      42 </span>            : #include &lt;ros/static_assert.h&gt;
+<span class="lineNum">      43 </span>            : #include &lt;opencv2/core/core.hpp&gt;
+<span class="lineNum">      44 </span>            : #include &lt;opencv2/imgproc/imgproc.hpp&gt;
+<span class="lineNum">      45 </span>            : #include &lt;opencv2/imgproc/types_c.h&gt;
+<span class="lineNum">      46 </span>            : #include &lt;stdexcept&gt;
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : namespace cv_bridge {
+<span class="lineNum">      49 </span>            : 
+<span class="lineNum">      50 </span>            : class Exception : public std::runtime_error
+<span class="lineNum">      51 </span>            : {
+<span class="lineNum">      52 </span>            : public:
+<span class="lineNum">      53 </span>            :   Exception(const std::string&amp; description) : std::runtime_error(description) {}
+<span class="lineNum">      54 </span>            : };
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : class CvImage;
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span>            : typedef boost::shared_ptr&lt;CvImage&gt; CvImagePtr;
+<span class="lineNum">      59 </span>            : typedef boost::shared_ptr&lt;CvImage const&gt; CvImageConstPtr;
+<span class="lineNum">      60 </span>            : 
+<span class="lineNum">      61 </span>            : //from: http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#Mat imread(const string&amp; filename, int flags)
+<span class="lineNum">      62 </span>            : typedef enum {
+<span class="lineNum">      63 </span>            :         BMP, DIB,
+<span class="lineNum">      64 </span>            :         JPG, JPEG, JPE,
+<span class="lineNum">      65 </span>            :         JP2,
+<span class="lineNum">      66 </span>            :         PNG,
+<span class="lineNum">      67 </span>            :         PBM, PGM, PPM,
+<span class="lineNum">      68 </span>            :         SR, RAS,
+<span class="lineNum">      69 </span>            :         TIFF, TIF,
+<span class="lineNum">      70 </span>            : } Format;
+<span class="lineNum">      71 </span>            : 
+<span class="lineNum">      72 </span>            : /**
+<span class="lineNum">      73 </span>            :  * \brief Image message class that is interoperable with sensor_msgs/Image but uses a
+<a name="74"><span class="lineNum">      74 </span>            :  * more convenient cv::Mat representation for the image data.</a>
+<span class="lineNum">      75 </span>            :  */
+<span class="lineNum">      76 </span><span class="lineCov">         16 : class CvImage</span>
+<span class="lineNum">      77 </span>            : {
+<span class="lineNum">      78 </span>            : public:
+<span class="lineNum">      79 </span>            :   std_msgs::Header header; //!&lt; ROS header
+<span class="lineNum">      80 </span>            :   std::string encoding;    //!&lt; Image encoding (&quot;mono8&quot;, &quot;bgr8&quot;, etc.)
+<span class="lineNum">      81 </span>            :   cv::Mat image;           //!&lt; Image data for use with OpenCV
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span>            :   /**
+<span class="lineNum">      84 </span>            :    * \brief Empty constructor.
+<span class="lineNum">      85 </span>            :    */
+<span class="lineNum">      86 </span>            :   CvImage() {}
+<span class="lineNum">      87 </span>            : 
+<span class="lineNum">      88 </span>            :   /**
+<a name="89"><span class="lineNum">      89 </span>            :    * \brief Constructor.</a>
+<span class="lineNum">      90 </span>            :    */
+<span class="lineNum">      91 </span><span class="lineCov">          8 :   CvImage(const std_msgs::Header&amp; header, const std::string&amp; encoding,</span>
+<span class="lineNum">      92 </span>            :           const cv::Mat&amp; image = cv::Mat())
+<span class="lineNum">      93 </span><span class="lineCov">          8 :     : header(header), encoding(encoding), image(image)</span>
+<span class="lineNum">      94 </span>            :   {
+<span class="lineNum">      95 </span><span class="lineCov">          8 :   }</span>
+<span class="lineNum">      96 </span>            :   
+<span class="lineNum">      97 </span>            :   /**
+<span class="lineNum">      98 </span>            :    * \brief Convert this message to a ROS sensor_msgs::Image message.
+<span class="lineNum">      99 </span>            :    *
+<span class="lineNum">     100 </span>            :    * The returned sensor_msgs::Image message contains a copy of the image data.
+<span class="lineNum">     101 </span>            :    */
+<span class="lineNum">     102 </span>            :   sensor_msgs::ImagePtr toImageMsg() const;
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span>            :   /**
+<span class="lineNum">     105 </span>            :    * dst_format is compress the image to desire format.
+<span class="lineNum">     106 </span>            :    * Default value is empty string that will convert to jpg format.
+<span class="lineNum">     107 </span>            :    * can be: jpg, jp2, bmp, png, tif at the moment
+<span class="lineNum">     108 </span>            :    * support this format from opencv:
+<span class="lineNum">     109 </span>            :    * http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#Mat imread(const string&amp; filename, int flags)
+<span class="lineNum">     110 </span>            :    */
+<span class="lineNum">     111 </span>            :   sensor_msgs::CompressedImagePtr toCompressedImageMsg(const Format dst_format = JPG) const;
+<span class="lineNum">     112 </span>            : 
+<span class="lineNum">     113 </span>            :   /**
+<span class="lineNum">     114 </span>            :    * \brief Copy the message data to a ROS sensor_msgs::Image message.
+<span class="lineNum">     115 </span>            :    *
+<span class="lineNum">     116 </span>            :    * This overload is intended mainly for aggregate messages such as stereo_msgs::DisparityImage,
+<span class="lineNum">     117 </span>            :    * which contains a sensor_msgs::Image as a data member.
+<span class="lineNum">     118 </span>            :    */
+<span class="lineNum">     119 </span>            :   void toImageMsg(sensor_msgs::Image&amp; ros_image) const;
+<span class="lineNum">     120 </span>            : 
+<span class="lineNum">     121 </span>            :   /**
+<span class="lineNum">     122 </span>            :    * dst_format is compress the image to desire format.
+<span class="lineNum">     123 </span>            :    * Default value is empty string that will convert to jpg format.
+<span class="lineNum">     124 </span>            :    * can be: jpg, jp2, bmp, png, tif at the moment
+<span class="lineNum">     125 </span>            :    * support this format from opencv:
+<span class="lineNum">     126 </span>            :    * http://docs.opencv.org/modules/highgui/doc/reading_and_writing_images_and_video.html#Mat imread(const string&amp; filename, int flags)
+<span class="lineNum">     127 </span>            :    */
+<span class="lineNum">     128 </span>            :   void toCompressedImageMsg(sensor_msgs::CompressedImage&amp; ros_image, const Format dst_format = JPG) const;
+<span class="lineNum">     129 </span>            : 
+<span class="lineNum">     130 </span>            : 
+<span class="lineNum">     131 </span>            :   typedef boost::shared_ptr&lt;CvImage&gt; Ptr;
+<span class="lineNum">     132 </span>            :   typedef boost::shared_ptr&lt;CvImage const&gt; ConstPtr;
+<span class="lineNum">     133 </span>            : 
+<span class="lineNum">     134 </span>            : protected:
+<span class="lineNum">     135 </span>            :   boost::shared_ptr&lt;void const&gt; tracked_object_; // for sharing ownership
+<span class="lineNum">     136 </span>            : 
+<span class="lineNum">     137 </span>            :   /// @cond DOXYGEN_IGNORE
+<span class="lineNum">     138 </span>            :   friend
+<span class="lineNum">     139 </span>            :   CvImageConstPtr toCvShare(const sensor_msgs::Image&amp; source,
+<span class="lineNum">     140 </span>            :                             const boost::shared_ptr&lt;void const&gt;&amp; tracked_object,
+<span class="lineNum">     141 </span>            :                             const std::string&amp; encoding);
+<span class="lineNum">     142 </span>            :   /// @endcond
+<span class="lineNum">     143 </span>            : };
+<span class="lineNum">     144 </span>            : 
+<span class="lineNum">     145 </span>            : 
+<span class="lineNum">     146 </span>            : /**
+<span class="lineNum">     147 </span>            :  * \brief Convert a sensor_msgs::Image message to an OpenCV-compatible CvImage, copying the
+<span class="lineNum">     148 </span>            :  * image data.
+<span class="lineNum">     149 </span>            :  *
+<span class="lineNum">     150 </span>            :  * \param source   A shared_ptr to a sensor_msgs::Image message
+<span class="lineNum">     151 </span>            :  * \param encoding The desired encoding of the image data, one of the following strings:
+<span class="lineNum">     152 </span>            :  *    - \c &quot;mono8&quot;
+<span class="lineNum">     153 </span>            :  *    - \c &quot;bgr8&quot;
+<span class="lineNum">     154 </span>            :  *    - \c &quot;bgra8&quot;
+<span class="lineNum">     155 </span>            :  *    - \c &quot;rgb8&quot;
+<span class="lineNum">     156 </span>            :  *    - \c &quot;rgba8&quot;
+<span class="lineNum">     157 </span>            :  *    - \c &quot;mono16&quot;
+<span class="lineNum">     158 </span>            :  *
+<span class="lineNum">     159 </span>            :  * If \a encoding is the empty string (the default), the returned CvImage has the same encoding
+<span class="lineNum">     160 </span>            :  * as \a source.
+<span class="lineNum">     161 </span>            :  */
+<span class="lineNum">     162 </span>            : CvImagePtr toCvCopy(const sensor_msgs::ImageConstPtr&amp; source,
+<span class="lineNum">     163 </span>            :                     const std::string&amp; encoding = std::string());
+<span class="lineNum">     164 </span>            : 
+<span class="lineNum">     165 </span>            : CvImagePtr toCvCopy(const sensor_msgs::CompressedImageConstPtr&amp; source,
+<span class="lineNum">     166 </span>            :                     const std::string&amp; encoding = std::string());
+<span class="lineNum">     167 </span>            : 
+<span class="lineNum">     168 </span>            : /**
+<span class="lineNum">     169 </span>            :  * \brief Convert a sensor_msgs::Image message to an OpenCV-compatible CvImage, copying the
+<span class="lineNum">     170 </span>            :  * image data.
+<span class="lineNum">     171 </span>            :  *
+<span class="lineNum">     172 </span>            :  * \param source   A sensor_msgs::Image message
+<span class="lineNum">     173 </span>            :  * \param encoding The desired encoding of the image data, one of the following strings:
+<span class="lineNum">     174 </span>            :  *    - \c &quot;mono8&quot;
+<span class="lineNum">     175 </span>            :  *    - \c &quot;bgr8&quot;
+<span class="lineNum">     176 </span>            :  *    - \c &quot;bgra8&quot;
+<span class="lineNum">     177 </span>            :  *    - \c &quot;rgb8&quot;
+<span class="lineNum">     178 </span>            :  *    - \c &quot;rgba8&quot;
+<span class="lineNum">     179 </span>            :  *    - \c &quot;mono16&quot;
+<span class="lineNum">     180 </span>            :  *
+<span class="lineNum">     181 </span>            :  * If \a encoding is the empty string (the default), the returned CvImage has the same encoding
+<span class="lineNum">     182 </span>            :  * as \a source.
+<span class="lineNum">     183 </span>            :  * If the source is 8bit and the encoding 16 or vice-versa, a scaling is applied (65535/255 and
+<span class="lineNum">     184 </span>            :  * 255/65535 respectively). Otherwise, no scaling is applied and the rules from the convertTo OpenCV
+<span class="lineNum">     185 </span>            :  * function are applied (capping): http://docs.opencv.org/modules/core/doc/basic_structures.html#mat-convertto
+<span class="lineNum">     186 </span>            :  */
+<span class="lineNum">     187 </span>            : CvImagePtr toCvCopy(const sensor_msgs::Image&amp; source,
+<span class="lineNum">     188 </span>            :                     const std::string&amp; encoding = std::string());
+<span class="lineNum">     189 </span>            : 
+<span class="lineNum">     190 </span>            : CvImagePtr toCvCopy(const sensor_msgs::CompressedImage&amp; source,
+<span class="lineNum">     191 </span>            :                     const std::string&amp; encoding = std::string());
+<span class="lineNum">     192 </span>            : 
+<span class="lineNum">     193 </span>            : /**
+<span class="lineNum">     194 </span>            :  * \brief Convert an immutable sensor_msgs::Image message to an OpenCV-compatible CvImage, sharing
+<span class="lineNum">     195 </span>            :  * the image data if possible.
+<span class="lineNum">     196 </span>            :  *
+<span class="lineNum">     197 </span>            :  * If the source encoding and desired encoding are the same, the returned CvImage will share
+<span class="lineNum">     198 </span>            :  * the image data with \a source without copying it. The returned CvImage cannot be modified, as that
+<span class="lineNum">     199 </span>            :  * could modify the \a source data.
+<span class="lineNum">     200 </span>            :  *
+<span class="lineNum">     201 </span>            :  * \param source   A shared_ptr to a sensor_msgs::Image message
+<span class="lineNum">     202 </span>            :  * \param encoding The desired encoding of the image data, one of the following strings:
+<span class="lineNum">     203 </span>            :  *    - \c &quot;mono8&quot;
+<span class="lineNum">     204 </span>            :  *    - \c &quot;bgr8&quot;
+<span class="lineNum">     205 </span>            :  *    - \c &quot;bgra8&quot;
+<span class="lineNum">     206 </span>            :  *    - \c &quot;rgb8&quot;
+<span class="lineNum">     207 </span>            :  *    - \c &quot;rgba8&quot;
+<span class="lineNum">     208 </span>            :  *    - \c &quot;mono16&quot;
+<span class="lineNum">     209 </span>            :  *
+<span class="lineNum">     210 </span>            :  * If \a encoding is the empty string (the default), the returned CvImage has the same encoding
+<span class="lineNum">     211 </span>            :  * as \a source.
+<span class="lineNum">     212 </span>            :  */
+<span class="lineNum">     213 </span>            : CvImageConstPtr toCvShare(const sensor_msgs::ImageConstPtr&amp; source,
+<span class="lineNum">     214 </span>            :                           const std::string&amp; encoding = std::string());
+<span class="lineNum">     215 </span>            : 
+<span class="lineNum">     216 </span>            : /**
+<span class="lineNum">     217 </span>            :  * \brief Convert an immutable sensor_msgs::Image message to an OpenCV-compatible CvImage, sharing
+<span class="lineNum">     218 </span>            :  * the image data if possible.
+<span class="lineNum">     219 </span>            :  *
+<span class="lineNum">     220 </span>            :  * If the source encoding and desired encoding are the same, the returned CvImage will share
+<span class="lineNum">     221 </span>            :  * the image data with \a source without copying it. The returned CvImage cannot be modified, as that
+<span class="lineNum">     222 </span>            :  * could modify the \a source data.
+<span class="lineNum">     223 </span>            :  *
+<span class="lineNum">     224 </span>            :  * This overload is useful when you have a shared_ptr to a message that contains a
+<span class="lineNum">     225 </span>            :  * sensor_msgs::Image, and wish to share ownership with the containing message.
+<span class="lineNum">     226 </span>            :  *
+<span class="lineNum">     227 </span>            :  * \param source         The sensor_msgs::Image message
+<span class="lineNum">     228 </span>            :  * \param tracked_object A shared_ptr to an object owning the sensor_msgs::Image
+<span class="lineNum">     229 </span>            :  * \param encoding       The desired encoding of the image data, one of the following strings:
+<span class="lineNum">     230 </span>            :  *    - \c &quot;mono8&quot;
+<span class="lineNum">     231 </span>            :  *    - \c &quot;bgr8&quot;
+<span class="lineNum">     232 </span>            :  *    - \c &quot;bgra8&quot;
+<span class="lineNum">     233 </span>            :  *    - \c &quot;rgb8&quot;
+<span class="lineNum">     234 </span>            :  *    - \c &quot;rgba8&quot;
+<span class="lineNum">     235 </span>            :  *    - \c &quot;mono16&quot;
+<span class="lineNum">     236 </span>            :  *
+<span class="lineNum">     237 </span>            :  * If \a encoding is the empty string (the default), the returned CvImage has the same encoding
+<span class="lineNum">     238 </span>            :  * as \a source.
+<span class="lineNum">     239 </span>            :  */
+<span class="lineNum">     240 </span>            : CvImageConstPtr toCvShare(const sensor_msgs::Image&amp; source,
+<span class="lineNum">     241 </span>            :                           const boost::shared_ptr&lt;void const&gt;&amp; tracked_object,
+<span class="lineNum">     242 </span>            :                           const std::string&amp; encoding = std::string());
+<span class="lineNum">     243 </span>            : 
+<span class="lineNum">     244 </span>            : /**
+<span class="lineNum">     245 </span>            :  * \brief Convert a CvImage to another encoding using the same rules as toCvCopy
+<span class="lineNum">     246 </span>            :  */
+<span class="lineNum">     247 </span>            : CvImagePtr cvtColor(const CvImageConstPtr&amp; source,
+<span class="lineNum">     248 </span>            :                     const std::string&amp; encoding);
+<span class="lineNum">     249 </span>            : 
+<span class="lineNum">     250 </span>            : struct CvtColorForDisplayOptions {
+<span class="lineNum">     251 </span>            :   CvtColorForDisplayOptions() :
+<span class="lineNum">     252 </span>            :     do_dynamic_scaling(false),
+<span class="lineNum">     253 </span>            :     min_image_value(0.0),
+<span class="lineNum">     254 </span>            :     max_image_value(0.0),
+<span class="lineNum">     255 </span>            :     colormap(-1),
+<span class="lineNum">     256 </span>            :     bg_label(-1) {}
+<span class="lineNum">     257 </span>            :   bool do_dynamic_scaling;
+<span class="lineNum">     258 </span>            :   double min_image_value;
+<span class="lineNum">     259 </span>            :   double max_image_value;
+<span class="lineNum">     260 </span>            :   int colormap;
+<span class="lineNum">     261 </span>            :   int bg_label;
+<span class="lineNum">     262 </span>            : };
+<span class="lineNum">     263 </span>            : 
+<span class="lineNum">     264 </span>            : 
+<span class="lineNum">     265 </span>            : /**
+<span class="lineNum">     266 </span>            :  * \brief Converts an immutable sensor_msgs::Image message to another CvImage for display purposes,
+<span class="lineNum">     267 </span>            :  * using practical conversion rules if needed.
+<span class="lineNum">     268 </span>            :  *
+<span class="lineNum">     269 </span>            :  * Data will be shared between input and output if possible.
+<span class="lineNum">     270 </span>            :  *
+<span class="lineNum">     271 </span>            :  * Recall: sensor_msgs::image_encodings::isColor and isMono tell whether an image contains R,G,B,A, mono
+<span class="lineNum">     272 </span>            :  * (or any combination/subset) with 8 or 16 bit depth.
+<span class="lineNum">     273 </span>            :  *
+<span class="lineNum">     274 </span>            :  * The following rules apply:
+<span class="lineNum">     275 </span>            :  * - if the output encoding is empty, the fact that the input image is mono or multiple-channel is
+<span class="lineNum">     276 </span>            :  * preserved in the ouput image. The bit depth will be 8. it tries to convert to BGR no matter what
+<span class="lineNum">     277 </span>            :  * encoding image is passed.
+<span class="lineNum">     278 </span>            :  * - if the output encoding is not empty, it must have sensor_msgs::image_encodings::isColor and
+<span class="lineNum">     279 </span>            :  * isMono return true. It must also be 8 bit in depth
+<span class="lineNum">     280 </span>            :  * - if the input encoding is an OpenCV format (e.g. 8UC1), and if we have 1,3 or 4 channels, it is
+<span class="lineNum">     281 </span>            :  * respectively converted to mono, BGR or BGRA.
+<span class="lineNum">     282 </span>            :  * - if the input encoding is 32SC1, this estimate that image as label image and will convert it as
+<span class="lineNum">     283 </span>            :  * bgr image with different colors for each label.
+<span class="lineNum">     284 </span>            :  *
+<span class="lineNum">     285 </span>            :  * \param source   A shared_ptr to a sensor_msgs::Image message
+<span class="lineNum">     286 </span>            :  * \param encoding Either an encoding string that returns true in sensor_msgs::image_encodings::isColor
+<span class="lineNum">     287 </span>            :  * isMono or the empty string as explained above.
+<span class="lineNum">     288 </span>            :  * \param options (cv_bridge::CvtColorForDisplayOptions) Options to convert the source image with.
+<span class="lineNum">     289 </span>            :  * - do_dynamic_scaling If true, the image is dynamically scaled between its minimum and maximum value
+<span class="lineNum">     290 </span>            :  * before being converted to its final encoding.
+<span class="lineNum">     291 </span>            :  * - min_image_value Independently from do_dynamic_scaling, if min_image_value and max_image_value are
+<span class="lineNum">     292 </span>            :  * different, the image is scaled between these two values before being converted to its final encoding.
+<span class="lineNum">     293 </span>            :  * - max_image_value Maximum image value
+<span class="lineNum">     294 </span>            :  * - colormap Colormap which the source image converted with.
+<span class="lineNum">     295 </span>            :  */
+<span class="lineNum">     296 </span>            : CvImageConstPtr cvtColorForDisplay(const CvImageConstPtr&amp; source,
+<span class="lineNum">     297 </span>            :                                    const std::string&amp; encoding = std::string(),
+<span class="lineNum">     298 </span>            :                                    const CvtColorForDisplayOptions options = CvtColorForDisplayOptions());
+<span class="lineNum">     299 </span>            : 
+<span class="lineNum">     300 </span>            : /**
+<span class="lineNum">     301 </span>            :  * \brief Get the OpenCV type enum corresponding to the encoding.
+<span class="lineNum">     302 </span>            :  *
+<span class="lineNum">     303 </span>            :  * For example, &quot;bgr8&quot; -&gt; CV_8UC3, &quot;32FC1&quot; -&gt; CV_32FC1, and &quot;32FC10&quot; -&gt; CV_32FC10.
+<span class="lineNum">     304 </span>            :  */
+<span class="lineNum">     305 </span>            : int getCvType(const std::string&amp; encoding);
+<span class="lineNum">     306 </span>            : 
+<span class="lineNum">     307 </span>            : } // namespace cv_bridge
+<span class="lineNum">     308 </span>            : 
+<span class="lineNum">     309 </span>            : 
+<span class="lineNum">     310 </span>            : // CvImage as a first class message type
+<span class="lineNum">     311 </span>            : 
+<span class="lineNum">     312 </span>            : // The rest of this file hooks into the roscpp serialization API to make CvImage
+<span class="lineNum">     313 </span>            : // a first-class message type you can publish and subscribe to directly.
+<span class="lineNum">     314 </span>            : // Unfortunately this doesn't yet work with image_transport, so don't rewrite all
+<span class="lineNum">     315 </span>            : // your callbacks to use CvImage! It might be useful for specific tasks, like
+<span class="lineNum">     316 </span>            : // processing bag files.
+<span class="lineNum">     317 </span>            : 
+<span class="lineNum">     318 </span>            : /// @cond DOXYGEN_IGNORE
+<span class="lineNum">     319 </span>            : namespace ros {
+<span class="lineNum">     320 </span>            : 
+<span class="lineNum">     321 </span>            : namespace message_traits {
+<span class="lineNum">     322 </span>            : 
+<span class="lineNum">     323 </span>            : template&lt;&gt; struct MD5Sum&lt;cv_bridge::CvImage&gt;
+<span class="lineNum">     324 </span>            : {
+<span class="lineNum">     325 </span>            :   static const char* value() { return MD5Sum&lt;sensor_msgs::Image&gt;::value(); }
+<span class="lineNum">     326 </span>            :   static const char* value(const cv_bridge::CvImage&amp;) { return value(); }
+<span class="lineNum">     327 </span>            : 
+<span class="lineNum">     328 </span>            :   static const uint64_t static_value1 = MD5Sum&lt;sensor_msgs::Image&gt;::static_value1;
+<span class="lineNum">     329 </span>            :   static const uint64_t static_value2 = MD5Sum&lt;sensor_msgs::Image&gt;::static_value2;
+<span class="lineNum">     330 </span>            :   
+<span class="lineNum">     331 </span>            :   // If the definition of sensor_msgs/Image changes, we'll get a compile error here.
+<span class="lineNum">     332 </span>            :   ROS_STATIC_ASSERT(MD5Sum&lt;sensor_msgs::Image&gt;::static_value1 == 0x060021388200f6f0ULL);
+<span class="lineNum">     333 </span>            :   ROS_STATIC_ASSERT(MD5Sum&lt;sensor_msgs::Image&gt;::static_value2 == 0xf447d0fcd9c64743ULL);
+<span class="lineNum">     334 </span>            : };
+<span class="lineNum">     335 </span>            : 
+<span class="lineNum">     336 </span>            : template&lt;&gt; struct DataType&lt;cv_bridge::CvImage&gt;
+<span class="lineNum">     337 </span>            : {
+<span class="lineNum">     338 </span>            :   static const char* value() { return DataType&lt;sensor_msgs::Image&gt;::value(); }
+<span class="lineNum">     339 </span>            :   static const char* value(const cv_bridge::CvImage&amp;) { return value(); }
+<span class="lineNum">     340 </span>            : };
+<span class="lineNum">     341 </span>            : 
+<span class="lineNum">     342 </span>            : template&lt;&gt; struct Definition&lt;cv_bridge::CvImage&gt;
+<span class="lineNum">     343 </span>            : {
+<span class="lineNum">     344 </span>            :   static const char* value() { return Definition&lt;sensor_msgs::Image&gt;::value(); }
+<span class="lineNum">     345 </span>            :   static const char* value(const cv_bridge::CvImage&amp;) { return value(); }
+<span class="lineNum">     346 </span>            : };
+<span class="lineNum">     347 </span>            : 
+<span class="lineNum">     348 </span>            : template&lt;&gt; struct HasHeader&lt;cv_bridge::CvImage&gt; : TrueType {};
+<span class="lineNum">     349 </span>            : 
+<span class="lineNum">     350 </span>            : } // namespace ros::message_traits
+<span class="lineNum">     351 </span>            : 
+<span class="lineNum">     352 </span>            : namespace serialization {
+<span class="lineNum">     353 </span>            : 
+<span class="lineNum">     354 </span>            : template&lt;&gt; struct Serializer&lt;cv_bridge::CvImage&gt;
+<span class="lineNum">     355 </span>            : {
+<span class="lineNum">     356 </span>            :   /// @todo Still ignoring endianness...
+<span class="lineNum">     357 </span>            :   
+<span class="lineNum">     358 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     359 </span>            :   inline static void write(Stream&amp; stream, const cv_bridge::CvImage&amp; m)
+<span class="lineNum">     360 </span>            :   {
+<span class="lineNum">     361 </span>            :     stream.next(m.header);
+<span class="lineNum">     362 </span>            :     stream.next((uint32_t)m.image.rows); // height
+<span class="lineNum">     363 </span>            :     stream.next((uint32_t)m.image.cols); // width
+<span class="lineNum">     364 </span>            :     stream.next(m.encoding);
+<span class="lineNum">     365 </span>            :     uint8_t is_bigendian = 0;
+<span class="lineNum">     366 </span>            :     stream.next(is_bigendian);
+<span class="lineNum">     367 </span>            :     stream.next((uint32_t)m.image.step);
+<span class="lineNum">     368 </span>            :     size_t data_size = m.image.step*m.image.rows;
+<span class="lineNum">     369 </span>            :     stream.next((uint32_t)data_size);
+<span class="lineNum">     370 </span>            :     if (data_size &gt; 0)
+<span class="lineNum">     371 </span>            :       memcpy(stream.advance(data_size), m.image.data, data_size);
+<span class="lineNum">     372 </span>            :   }
+<span class="lineNum">     373 </span>            : 
+<span class="lineNum">     374 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     375 </span>            :   inline static void read(Stream&amp; stream, cv_bridge::CvImage&amp; m)
+<span class="lineNum">     376 </span>            :   {
+<span class="lineNum">     377 </span>            :     stream.next(m.header);
+<span class="lineNum">     378 </span>            :     uint32_t height, width;
+<span class="lineNum">     379 </span>            :     stream.next(height);
+<span class="lineNum">     380 </span>            :     stream.next(width);
+<span class="lineNum">     381 </span>            :     stream.next(m.encoding);
+<span class="lineNum">     382 </span>            :     uint8_t is_bigendian;
+<span class="lineNum">     383 </span>            :     stream.next(is_bigendian);
+<span class="lineNum">     384 </span>            :     uint32_t step, data_size;
+<span class="lineNum">     385 </span>            :     stream.next(step);
+<span class="lineNum">     386 </span>            :     stream.next(data_size);
+<span class="lineNum">     387 </span>            :     int type = cv_bridge::getCvType(m.encoding);
+<span class="lineNum">     388 </span>            :     // Construct matrix pointing to the stream data, then copy it to m.image
+<span class="lineNum">     389 </span>            :     cv::Mat tmp((int)height, (int)width, type, stream.advance(data_size), (size_t)step);
+<span class="lineNum">     390 </span>            :     tmp.copyTo(m.image);
+<span class="lineNum">     391 </span>            :   }
+<span class="lineNum">     392 </span>            : 
+<span class="lineNum">     393 </span>            :   inline static uint32_t serializedLength(const cv_bridge::CvImage&amp; m)
+<span class="lineNum">     394 </span>            :   {
+<span class="lineNum">     395 </span>            :     size_t data_size = m.image.step*m.image.rows;
+<span class="lineNum">     396 </span>            :     return serializationLength(m.header) + serializationLength(m.encoding) + 17 + data_size;
+<span class="lineNum">     397 </span>            :   }
+<span class="lineNum">     398 </span>            : };
+<span class="lineNum">     399 </span>            : 
+<span class="lineNum">     400 </span>            : } // namespace ros::serialization
+<span class="lineNum">     401 </span>            : 
+<span class="lineNum">     402 </span>            : namespace message_operations {
+<span class="lineNum">     403 </span>            : 
+<span class="lineNum">     404 </span>            : template&lt;&gt; struct Printer&lt;cv_bridge::CvImage&gt;
+<span class="lineNum">     405 </span>            : {
+<span class="lineNum">     406 </span>            :   template&lt;typename Stream&gt;
+<span class="lineNum">     407 </span>            :   static void stream(Stream&amp;, const std::string&amp;, const cv_bridge::CvImage&amp;)
+<span class="lineNum">     408 </span>            :   {
+<span class="lineNum">     409 </span>            :     /// @todo Replicate printing for sensor_msgs::Image
+<span class="lineNum">     410 </span>            :   }
+<span class="lineNum">     411 </span>            : };
+<span class="lineNum">     412 </span>            : 
+<span class="lineNum">     413 </span>            : } // namespace ros::message_operations
+<span class="lineNum">     414 </span>            : 
+<span class="lineNum">     415 </span>            : } // namespace ros
+<span class="lineNum">     416 </span>            : 
+<span class="lineNum">     417 </span>            : namespace cv_bridge {
+<span class="lineNum">     418 </span>            : 
+<span class="lineNum">     419 </span>            : inline std::ostream&amp; operator&lt;&lt;(std::ostream&amp; s, const CvImage&amp; m)
+<span class="lineNum">     420 </span>            : {
+<span class="lineNum">     421 </span>            :   ros::message_operations::Printer&lt;CvImage&gt;::stream(s, &quot;&quot;, m);
+<span class="lineNum">     422 </span>            :   return s;
+<span class="lineNum">     423 </span>            : }
+<span class="lineNum">     424 </span>            : 
+<span class="lineNum">     425 </span>            : } // namespace cv_bridge
+<span class="lineNum">     426 </span>            : 
+<span class="lineNum">     427 </span>            : /// @endcond
+<span class="lineNum">     428 </span>            : 
+<span class="lineNum">     429 </span>            : #endif
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
