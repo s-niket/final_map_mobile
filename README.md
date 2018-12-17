@@ -102,7 +102,7 @@ Occansionally the robot will experience a large jump in angular velocity, the ca
 If the robot is experiencing large changes in z orientation when it approches a stop sign it may register and lose the sign multiple times causing the robot to stop several times at a single sign.
 ## API and other developer documentation
 
-This project was done using Pair Proggramming. The development team took turns serving as driver and navigator with Niket show working on driver for the sign detection and Zachary Zimits working as the driver for the lane detection.
+This project was done using Pair Programming. The development team took turns serving as driver and navigator with Niket Shah working on driver for the sign detection and Zachary Zimits working as the driver for the lane detection.
 
 ### Product Backlog Link<br/>
 https://docs.google.com/spreadsheets/d/14xQGIgG6C0ESPju1HD3xA1dDB8FOpix7ZD7LX9gpMUo/edit?usp=sharing<br/>
@@ -116,7 +116,7 @@ Or in /Results/html/index.html file
 
 ## Video Presentation
 Presentation: https://youtu.be/kymJSMamifE
-Demonstration: https://youtu.be/O5tHOFdxM_M
+Demonstration: https://youtu.be/kzqFy_jymck
 
 ## License
 
